@@ -1,0 +1,37 @@
+.page-auth {
+  .row-login {
+    min-height: 70vh;
+  }
+
+  .section-store-auth {
+    h2 {
+      font-weight: 200;
+      font-size: 20px;
+      color: #0c0d36;
+      margin-top: 0;
+    }
+    .form-control {
+      border-radius: 8px;
+      background: #f3f3f3;
+    }
+    .btn-signup {
+      background: #f3f3f3;
+      color: #bbb;
+
+      &:hover {
+        background: #dddddd;
+        color: rgb(101, 101, 101);
+      }
+    }
+
+    .pagee {
+      @media screen and (min-width: 991px) {
+        margin-top: 100px;
+      }
+      margin-top: 20px;
+    }
+    .login-part {
+      margin-top: 0px;
+    }
+  }
+}

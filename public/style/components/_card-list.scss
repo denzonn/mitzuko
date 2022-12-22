@@ -1,0 +1,21 @@
+.card-list {
+  margin-bottom: 10px;
+
+  img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+
+    @media (max-width: 767px) {
+      height: 50px;
+      width: 50px;
+    }
+  }
+  .card-body {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 40px;
+    color: #0c0d36;
+  }
+}
