@@ -22,14 +22,20 @@
             <!-- Sidebar -->
             <div class="border-right" id="sidebar-wrapper">
                 <div class="sidebard-heading text-center">
-                    <img src="/images/dashboard-logo.svg" alt="" class="my-4" />
+                    <img src="/images/settings.png" alt="" class="my-4 w-50" style="max-width: 150px" />
                 </div>
                 <div class="list-group list-group-flush">
                     <a href="dashboard.html" class="list-group-item list-group-item-action">
                         Dashboard
                     </a>
+                    <a href="dashboard-products.html" class="list-group-item list-group-item-action ">
+                        Categories
+                    </a>
                     <a href="dashboard-products.html" class="list-group-item list-group-item-action active">
                         Product
+                    </a>
+                    <a href="dashboard-products.html" class="list-group-item list-group-item-action ">
+                        Users
                     </a>
                     <a href="index.html" class="list-group-item list-group-item-action">
                         Sign Out
@@ -55,27 +61,15 @@
                                     <a href="#" class="nav-link" id="navbarDropdown" role="button"
                                         data-toggle="dropdown">
                                         <img src="/images/user_pc.png" alt=""
-                                            class="rounded-circle mr-2 profile-picture" />Hi, Denson</a>
-                                    <div class="dropdown-menu">
-                                        <a href="dashboard.html" class="dropdown-item">Dashboard</a>
-                                        <a href="dashboard-account.html" class="dropdown-item">Settings</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a href="/" class="dropdown-item">Log Out</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link d-inline-block mt-2">
-                                        <img src="/images/cart_filled.svg" alt="" />
-                                        <div class="cart-badge">10</div>
-                                    </a>
+                                            class="rounded-circle mr-2 profile-picture" />Hi, Admin</a>
+
                                 </li>
                             </ul>
 
                             <!-- Mobile Menu -->
                             <ul class="navbar-nav d-block d-lg-none">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">Hi, Denson</a>
-                                    <a href="#" class="nav-link d-inline-block">Cart</a>
+                                    <a href="#" class="nav-link">Hi, Admin</a>
                                 </li>
                             </ul>
                         </div>
