@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,17 +38,22 @@ Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingControlle
 
 // Admin Routes
 Route::prefix('admin')
-    ->namespace('admin')
     // ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
             ->name('admin-dashboard');
+
+        // Category
+        Route::resource('category', App\Http\Controllers\Admin\CategoryController::class);
+
+        // Products
         Route::get('/dashboard/products', [App\Http\Controllers\Admin\DashboardProductController::class, 'index'])
             ->name('admin-dashboard-product');
         Route::get('/dashboard/products/create', [App\Http\Controllers\Admin\DashboardProductController::class, 'create'])
             ->name('admin-dashboard-product-create');
         Route::get('/dashboard/products/{id}', [App\Http\Controllers\Admin\DashboardProductController::class, 'detail'])
             ->name('admin-dashboard-product-detail');
+
 
         Route::get('/dashboard/transactions', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'index'])
             ->name('admin-dashboard-transactions');

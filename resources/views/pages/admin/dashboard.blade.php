@@ -17,7 +17,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <div class="dashboard-card-title">Costumer</div>
-                                <div class="dashboard-card-subtitle">15,209</div>
+                                <div class="dashboard-card-subtitle">{{ $costumer }}</div>
                             </div>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <div class="dashboard-card-title">Profit</div>
-                                <div class="dashboard-card-subtitle">15,209</div>
+                                <div class="dashboard-card-subtitle">Rp. {{ $profit }}</div>
                             </div>
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <div class="dashboard-card-title">Transaction</div>
-                                <div class="dashboard-card-subtitle">15,209</div>
+                                <div class="dashboard-card-subtitle">{{ $transaction }}</div>
                             </div>
                         </div>
                     </div>
