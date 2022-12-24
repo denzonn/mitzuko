@@ -34,8 +34,12 @@
                         Categories
                     </a>
                     <a href="{{ route('product.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/product*') ? 'active' : '' }}">
+                        class="list-group-item list-group-item-action {{ request()->is('admin/product') ? 'active' : '' }}">
                         Product
+                    </a>
+                    <a href="{{ route('product-gallery.index') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/product-gallery*') ? 'active' : '' }}">
+                        Product Galleries
                     </a>
                     <a href="{{ route('admin-dashboard-transactions') }}"
                         class="list-group-item list-group-item-action ">

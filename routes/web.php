@@ -52,6 +52,8 @@ Route::prefix('admin')
         // Products
         Route::resource('product', App\Http\Controllers\Admin\ProductController::class);
 
+        // Product Gallery
+        Route::resource('product-gallery', App\Http\Controllers\Admin\ProductGalleryController::class);
 
         Route::get('/dashboard/transactions', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'index'])
             ->name('admin-dashboard-transactions');
