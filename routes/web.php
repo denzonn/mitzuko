@@ -50,12 +50,7 @@ Route::prefix('admin')
         Route::resource('user', App\Http\Controllers\Admin\UserController::class);
 
         // Products
-        Route::get('/dashboard/products', [App\Http\Controllers\Admin\DashboardProductController::class, 'index'])
-            ->name('admin-dashboard-product');
-        Route::get('/dashboard/products/create', [App\Http\Controllers\Admin\DashboardProductController::class, 'create'])
-            ->name('admin-dashboard-product-create');
-        Route::get('/dashboard/products/{id}', [App\Http\Controllers\Admin\DashboardProductController::class, 'detail'])
-            ->name('admin-dashboard-product-detail');
+        Route::resource('product', App\Http\Controllers\Admin\ProductController::class);
 
 
         Route::get('/dashboard/transactions', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'index'])
