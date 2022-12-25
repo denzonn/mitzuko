@@ -22,7 +22,7 @@ class CategoryController extends Controller
 
     public function detail(Request $request, $slug)
     {
-        $categories = Category::paginate(8)->all();
+        $categories = Category::all();
 
         //Relasikan dahulu dengan galleries untuk mengambil gambarnya
         $category = Category::where('slug', $slug)->firstOrFail();
