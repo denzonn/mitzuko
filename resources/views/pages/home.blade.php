@@ -91,7 +91,8 @@
                                         ">
                                     </div>
                                 </div>
-                                <div class="products-text">{{ $product->name }}</div>
+                                <div class="products-text">
+                                    {{ \Illuminate\Support\Str::limit($product->name ?? '', 50, ' ...') }}</div>
                                 <div class="products-price">Rp. {{ number_format($product->price, 0, ',', '.') }}</div>
                             </a>
                         </div>

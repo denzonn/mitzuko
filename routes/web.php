@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,3 +65,5 @@ Route::prefix('admin')
         Route::get('/dashboard/transactions', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'index'])
             ->name('admin-dashboard-transactions');
     });
+
+Auth::routes();
