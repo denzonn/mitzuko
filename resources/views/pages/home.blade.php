@@ -19,13 +19,13 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="/images/banner.jpg" alt="Carousel Image" class="d-block w-100" />
+                                    <img src="/images/carousel1.png" alt="Carousel Image" class="d-block w-100" />
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/images/banner.jpg" alt="Carousel Image" class="d-block w-100" />
+                                    <img src="/images/carousel2.png" alt="Carousel Image" class="d-block w-100" />
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/images/banner.jpg" alt="Carousel Image" class="d-block w-100" />
+                                    <img src="/images/carousel3.png" alt="Carousel Image" class="d-block w-100" />
                                 </div>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                         $incrementCategory = 0;
                     @endphp
                     @forelse ($categories as $category)
-                        <div class="col-4 col-md-4 col-lg-2" data-aos="fade-up"
+                        <div class="col-4 col-md-3 col-lg-2" data-aos="fade-up"
                             data-aos-delay="{{ $incrementCategory += 100 }}">
                             <a href="{{ route('categories-detail', $category->slug) }}"
                                 class="component-categories d-block">
@@ -80,7 +80,7 @@
                         $incrementProduct = 0;
                     @endphp
                     @forelse ($products as $product)
-                        <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up"
+                        <div class="col-4 col-md-3 col-lg-2" data-aos="fade-up"
                             data-aos-delay="{{ $incrementProduct += 100 }}">
                             <a href="{{ route('detail', $product->slug) }}" class="component-products d-block">
                                 <div class="product-thumbnail">
