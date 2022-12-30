@@ -72,7 +72,8 @@
                         </div>
                         <div class="col-lg-2" data-aos="zoom-in">
                             @auth
-                                <form action="#" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('detail-add', $product->id) }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <button type="submit" class="btn btn-success px-4 text-white btn-block mb-3">
                                         Add to Cart
