@@ -47,7 +47,7 @@
                 <div class="col-xl-4 col-lg-4 col-md-6 mb-50">
                     <div class="footer-widget">
                         <div class="footer-logo">
-                            <a href="index.html"><img src="/images/mitzukoduo.png" class="w-50" alt="logo" /></a>
+                            <a href="index.html"><img src="/images/mitzukooo.png" class="w-50" alt="logo" /></a>
                         </div>
                     </div>
                     <div class="footer-text">
