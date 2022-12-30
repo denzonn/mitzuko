@@ -52,6 +52,7 @@
                                 <img src="/images/cart_filled.svg" alt="" />
                                 <div class="cart-badge">{{ $carts }}</div>
                             @else
+                                <img src="/images/cart-empty.svg" alt="" />
                             @endif
 
                         </a>
@@ -61,7 +62,7 @@
                 <!-- Mobile Menu -->
                 <ul class="navbar-nav d-block d-lg-none">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">Hi, Denson</a>
+                        <a href="#" class="nav-link">Hi, {{ Auth::user()->name }}</a>
                         <a href="{{ route('cart') }}" class="nav-link d-inline-block">Cart</a>
                     </li>
                 </ul>

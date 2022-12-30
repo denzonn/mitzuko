@@ -28,10 +28,8 @@ Route::get('/details/{id}', [App\Http\Controllers\DetailController::class, 'inde
 Route::post('/details/{id}', [App\Http\Controllers\DetailController::class, 'add'])
     ->name('detail-add');
 
-Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])
-    ->name('cart');
-Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'delete'])
-    ->name('cart-delete');
+Route::post('/checkout/callback', [App\Http\Controllers\CheckoutController::class, 'callback'])
+    ->name('midtrans-callback');
 
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])
     ->name('success');
@@ -39,13 +37,26 @@ Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])
 Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::class, 'success'])
     ->name('register-success');
 
-// User Routes
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
-    ->name('dashboard');
-Route::get('/dashboard/transactions', [App\Http\Controllers\DashboardController::class, 'transaction'])
-    ->name('dashboard-transactions');
-Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])
-    ->name('dashboard-settings-account');
+Route::group(['middleware' => ['auth']], function () {
+
+    // Cart
+    Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])
+        ->name('cart');
+    Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'delete'])
+        ->name('cart-delete');
+
+    //Midtrans
+    Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'process'])
+        ->name('checkout');
+
+    // Dashboard
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
+        ->name('dashboard');
+    Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardController::class, 'details'])
+        ->name('dashboard-transaction-details');
+    Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])
+        ->name('dashboard-settings-account');
+});
 
 // Admin Routes
 Route::prefix('admin')
