@@ -34,12 +34,12 @@
         </section>
 
         <!-- Gallery -->
-        <section class="store-gallery" id="gallery">
+        <section class="store-gallery mb-3" id="gallery">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8" data-aos="zoom-in">
                         <transition name="slide-fade" mode="out-in">
-                            <img :src="photos[activePhoto].url" :key="photos[activePhoto].id" class="w-100 main-image"
+                            <img :src="photos[activePhoto].url" :key="photos[activePhoto].id" class="main-image"
                                 alt="" />
                         </transition>
                     </div>
@@ -65,17 +65,27 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-8">
-                            <h1>Bed Cover</h1>
-                            <div class="brand">By Nikea</div>
-                            <div class="price">Rp. 2.000.000</div>
+                            <h1>{{ $product->name }}</h1>
+                            <div class="brand">By {{ $product->brand }}</div>
+                            <div class="price mt-3">Rp. {{ number_format($product->price, 0, ',', '.') }}
+                            </div>
                         </div>
                         <div class="col-lg-2" data-aos="zoom-in">
-                            <a href="cart.html" class="btn btn-success px-4 text-white btn-block mb-3">
-                                Add to Cart
-                            </a>
+                            @auth
+                                <form action="{{ route('detail-add', $product->id) }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success px-4 text-white btn-block mb-3">
+                                        Add to Cart
+                                    </button>
+                                </form>
+                            @else
+                                <a href="{{ route('login') }}" class="btn btn-success px-4 text-white btn-block mb-3">
+                                    Sign In to Add
+                                </a>
+                            @endauth
                         </div>
                     </div>
-                </div>
             </section>
 
             <!-- Desc -->
@@ -84,10 +94,7 @@
                     <div class="row">
                         <div class="col-12 col-lg-8">
                             <p>
-                                The Nike Air Max 720 SE goes bigger than ever before with
-                                Nike's tallest Air unit yet for unimaginable, all-day comfort.
-                                There's super breathable fabrics on the upper, while colours
-                                add a modern edge.
+                                {!! $product->description !!}
                             </p>
                         </div>
                     </div>
@@ -217,22 +224,13 @@
             },
             data: {
                 activePhoto: 0,
-                photos: [{
-                        id: 1,
-                        url: "/images/reside-g881412235_1920.jpg",
-                    },
-                    {
-                        id: 2,
-                        url: "/images/hd-wallpaper-g40fb056bb_1280.jpg",
-                    },
-                    {
-                        id: 3,
-                        url: "/images/bedroom-g31559bc87_1280.jpg",
-                    },
-                    {
-                        id: 4,
-                        url: "/images/bed-g38528a4bb_1920.jpg",
-                    },
+                photos: [
+                    @foreach ($product->galleries as $gallery)
+                        {
+                            id: {{ $gallery->id }},
+                            url: "{{ Storage::url($gallery->photos) }}",
+                        },
+                    @endforeach
                 ],
             },
             methods: {

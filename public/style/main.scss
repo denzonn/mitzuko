@@ -1,24 +1,24 @@
 // Import Bootstrap 4 Library
-@import "../vendor/bootstrap/scss/bootstrap.css";
+@import '../vendor/bootstrap/scss/bootstrap.css';
 
-@import "global";
-@import "fonts";
-@import "navbar";
+@import 'global';
+@import 'fonts';
+@import 'navbar';
 
-@import "pages/home";
-@import "pages/details";
-@import "pages/cart";
-@import "pages/success";
-@import "pages/auth";
-@import "pages/dashboard";
+@import 'pages/home';
+@import 'pages/details';
+@import 'pages/cart';
+@import 'pages/success';
+@import 'pages/auth';
+@import 'pages/dashboard';
 
-@import "components/categories";
-@import "components/product";
-@import "components/breadcrumbs";
-@import "components/card";
-@import "components/card";
-@import "components/card-list";
-@import "components/card-dashboard";
-@import "components/footer";
+@import 'components/categories';
+@import 'components/product';
+@import 'components/breadcrumbs';
+@import 'components/card';
+@import 'components/card';
+@import 'components/card-list';
+@import 'components/card-dashboard';
+@import 'components/footer';
 
-@import "transitions/slide-fade";
+@import 'transitions/slide-fade';
