@@ -8,72 +8,81 @@
     <div class="section-content section-dashboard-home" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
-                <h2 class="dashboard-title">Product</h2>
-                <p class="dashboard-subtitle">Create New Product</p>
+                <h2 class="dashboard-title">Add New Product</h2>
+                <p class="dashboard-subtitle">Create your own product</p>
             </div>
             <div class="dashboard-content">
                 <div class="row">
-                    <div class="col-md-12">
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
-                                    @csrf
+                    <div class="col-12">
+                        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <div class="card">
+                                <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Nama Product</label>
-                                                <input type="text" name="name" class="form-control" required>
+                                                <label>Product Name</label>
+                                                <input type="text" class="form-control" name="name" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Price</label>
+                                                <input type="number" class="form-control" name="price" />
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Brand Product</label>
-                                                <input type="text" name="brand" class="form-control" required>
+                                                <label>Product Brand</label>
+                                                <input type="text" class="form-control" name="brand" />
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Kategory Product</label>
+                                                <label>Kategori</label>
                                                 <select name="categories_id" class="form-control">
-                                                    @foreach ($categories as $category)
-                                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                    @foreach ($categories as $categories)
+                                                        <option value="{{ $categories->id }}">{{ $categories->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Harga Product</label>
-                                                <input type="number" name="price" class="form-control" required>
+                                                <label>Description</label>
+                                                <textarea name="description" id="editor"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Deskripsi Product</label>
-                                                <textarea name="description" id="editor">
-                                                </textarea>
+                                                <label>Thumbnails</label>
+                                                <input type="file" name="photo" class="form-control" />
+                                                <p class="text-muted">
+                                                    Kamu dapat memilih lebih dari satu file
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col text-right">
-                                            <button type="submit" class="btn btn-success px-5">Save Now</button>
-                                        </div>
-                                    </div>
-
-                                </form>
+                                </div>
                             </div>
-                        </div>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success btn-block px-5">
+                                        Save Now
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductGallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -19,41 +19,53 @@ class ProductController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
+        $products = Product::with(['galleries', 'category'])->get();
+        return view('pages.admin.product.index', [
+            'products' => $products
+        ]);
+    }
 
-            // Memanggil Relasi
-            $query = Product::with(['category']);
+    public function detail(Request $request, $id)
+    {
+        $product = Product::with(['galleries', 'category'])->findOrFail($id);
 
-            return Datatables::of($query)
-                ->addColumn('action', function ($item) {
-                    return '
-                        <div class="btn-group">
-                            <div class="dropdown">
-                                <button class="btn btn-primary dropdown-toggle mr-1 mb-1" 
-                                    type="button" id="action' .  $item->id . '"
-                                        data-toggle="dropdown" 
-                                        aria-haspopup="true"
-                                        aria-expanded="false">
-                                        Aksi
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="action' .  $item->id . '">
-                                    <a class="dropdown-item" href="' . route('product.edit', $item->id) . '">
-                                        Sunting
-                                    </a>
-                                    <form action="' . route('product.destroy', $item->id) . '" method="POST">
-                                        ' . method_field('delete') . csrf_field() . '
-                                        <button type="submit" class="dropdown-item text-danger">
-                                            Hapus
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                    </div>';
-                })
-                ->rawColumns(['action'])
-                ->make();
+        $categories = Category::all();
+
+        return view('pages.admin.product.detail', [
+            'product' => $product,
+            'categories' => $categories
+        ]);
+    }
+
+    public function uploadGallery(Request $request)
+    {
+        $product = Product::findOrFail($request->products_id);
+
+        if ($request->hasFile('photos')) {
+            $images = $request->file('photos');
+
+            $extension = $images->getClientOriginalExtension();
+
+            $random = \Str::random(10);
+            $file_name = "product-gallery" . $random . "." . $extension;
         }
-        return view('pages.admin.product.index');
+
+        $gallery = [
+            'products_id' => $product->id,
+            'photos' => $request->file('photos')->storeAs('public/assets/product-gallery', $file_name)
+        ];
+
+        ProductGallery::create($gallery);
+
+        return redirect()->route('admin-dashboard-product-details', $request->products_id);
+    }
+
+    public function deleteGallery(Request $request, $id)
+    {
+        $item = ProductGallery::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('admin-dashboard-product-details', $item->products_id);
     }
 
     /**
@@ -83,7 +95,23 @@ class ProductController extends Controller
 
         $data['slug'] = \Str::slug($request->name);
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        if ($request->hasFile('photo')) {
+            $images = $request->file('photo');
+
+            $extension = $images->getClientOriginalExtension();
+
+            $random = \Str::random(10);
+            $file_name = "product-gallery" . $random . "." . $extension;
+        }
+
+        $gallery = [
+            'products_id' => $product->id,
+            'photos' => $request->file('photo')->storeAs('public/assets/product-gallery', $file_name)
+        ];
+
+        ProductGallery::create($gallery);
 
         return redirect()->route('product.index');
     }
@@ -107,7 +135,6 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-
         $item = Product::findOrFail($id);
         $categories = Category::all();
 

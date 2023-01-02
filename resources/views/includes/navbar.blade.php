@@ -32,7 +32,11 @@
                             <img src="/images/user_pc.png" alt="" class="rounded-circle mr-2 profile-picture" />Hi,
                             {{ Auth::user()->name }}</a>
                         <div class="dropdown-menu">
-                            <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+                            @if (Auth::user()->roles == 'ADMIN')
+                                <a href="{{ route('admin-dashboard') }}" class="dropdown-item">Dashboard</a>
+                            @else
+                                <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+                            @endif
                             <a href="{{ route('dashboard-settings-account') }}" class="dropdown-item">Settings</a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('logout') }}"

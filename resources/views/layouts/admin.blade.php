@@ -26,7 +26,8 @@
                     <img src="/images/settings.png" alt="" class="my-4 w-50" style="max-width: 150px" />
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="{{ route('admin-dashboard') }}" class="list-group-item list-group-item-action">
+                    <a href="{{ route('admin-dashboard') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('admin/dashboard') ? 'active' : '' }}">
                         Dashboard
                     </a>
                     <a href="{{ route('category.index') }}"
@@ -34,24 +35,23 @@
                         Categories
                     </a>
                     <a href="{{ route('product.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/product') ? 'active' : '' }}">
+                        class="list-group-item list-group-item-action {{ request()->is('admin/product*') ? 'active' : '' }}">
                         Product
                     </a>
-                    <a href="{{ route('product-gallery.index') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('admin/product-gallery*') ? 'active' : '' }}">
-                        Product Galleries
-                    </a>
                     <a href="{{ route('admin-dashboard-transactions') }}"
-                        class="list-group-item list-group-item-action ">
+                        class="list-group-item list-group-item-action {{ request()->is('admin/dashboard/transactions*') ? 'active' : '' }}">
                         Transaction
                     </a>
                     <a href="{{ route('user.index') }}"
                         class="list-group-item list-group-item-action {{ request()->is('admin/user*') ? 'active' : '' }}">
                         Users
                     </a>
-                    <a href="{{ route('home') }}" class="list-group-item list-group-item-action">
-                        Sign Out
-                    </a>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="list-group-item list-group-item-action">Sign Out</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </div>
 
@@ -70,10 +70,11 @@
                             <!-- Desktop Menu -->
                             <ul class="navbar-nav d-none d-lg-flex ml-auto">
                                 <li class="nav-item dropdown">
-                                    <a href="#" class="nav-link" id="navbarDropdown" role="button"
+                                    <a href="{{ route('home') }}" class="nav-link" id="navbarDropdown" role="button"
                                         data-toggle="dropdown">
                                         <img src="/images/user_pc.png" alt=""
-                                            class="rounded-circle mr-2 profile-picture" />Hi, Admin</a>
+                                            class="rounded-circle mr-2 profile-picture" />Hi,
+                                        {{ Auth::user()->name }}</a>
 
                                 </li>
                             </ul>
@@ -81,7 +82,7 @@
                             <!-- Mobile Menu -->
                             <ul class="navbar-nav d-block d-lg-none">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">Hi, Admin</a>
+                                    <a href="#" class="nav-link">Hi, {{ Auth::user()->name }}</a>
                                 </li>
                             </ul>
                         </div>
