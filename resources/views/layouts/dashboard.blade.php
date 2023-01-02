@@ -29,15 +29,21 @@
                         class="list-group-item list-group-item-action {{ request()->is('dashboard') ? 'active' : '' }}">
                         Dashboard
                     </a>
+                    <a href="{{ route('dashboard-transaction') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('dashboard/transaction*') ? 'active' : '' }}">
+                        Transaction
+                    </a>
                     <a href="{{ route('dashboard-settings-account') }}"
                         class="list-group-item list-group-item-action {{ request()->is('dashboard/account*') ? 'active' : '' }}">
                         My Account
                     </a>
 
-                    <a href="{{ route('home') }}" class="list-group-item list-group-item-action"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Sign Out
-                    </a>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="list-group-item list-group-item-action">Sign Out</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </div>
 

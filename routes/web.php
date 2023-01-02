@@ -38,7 +38,6 @@ Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::c
     ->name('register-success');
 
 Route::group(['middleware' => ['auth']], function () {
-
     // Cart
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])
         ->name('cart');
@@ -52,33 +51,56 @@ Route::group(['middleware' => ['auth']], function () {
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard');
-    Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardController::class, 'details'])
+
+    Route::get('/dashboard/transactions', [App\Http\Controllers\DashboardTransactionController::class, 'index'])
+        ->name('dashboard-transaction');
+    Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])
         ->name('dashboard-transaction-details');
+
+
     Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])
         ->name('dashboard-settings-account');
+    Route::post('/dashboard/account/update', [App\Http\Controllers\DashboardSettingController::class, 'update'])
+        ->name('dashboard-settings-account-update');
 });
 
 // Admin Routes
 Route::prefix('admin')
-    // ->middleware(['auth', 'admin'])
+    ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])
             ->name('admin-dashboard');
 
         // Category
         Route::resource('category', App\Http\Controllers\Admin\CategoryController::class);
+        Route::get('/category/delete/{id}', [App\Http\Controllers\Admin\CategoryController::class, 'destroy'])
+            ->name('admin-dashboard-category-delete');
 
         // User
         Route::resource('user', App\Http\Controllers\Admin\UserController::class);
 
         // Products
         Route::resource('product', App\Http\Controllers\Admin\ProductController::class);
+        Route::get('/product/delete/{id}', [App\Http\Controllers\Admin\ProductController::class, 'destroy'])
+            ->name('admin-dashboard-product-delete');
 
-        // Product Gallery
-        Route::resource('product-gallery', App\Http\Controllers\Admin\ProductGalleryController::class);
+        Route::get('/product/detail/{id}', [App\Http\Controllers\Admin\ProductController::class, 'detail'])
+            ->name('admin-dashboard-product-details');
+        Route::post('/product/detail/{id}', [App\Http\Controllers\Admin\ProductController::class, 'update'])
+            ->name('admin-dashboard-product-update');
+
+        Route::post('/product/gallery/upload', [App\Http\Controllers\Admin\ProductController::class, 'uploadGallery'])
+            ->name('admin-dashboard-product-gallery-upload');
+        Route::get('/product/gallery/delete/{id}', [App\Http\Controllers\Admin\ProductController::class, 'deleteGallery'])
+            ->name('admin-dashboard-product-gallery-delete');
 
         Route::get('/dashboard/transactions', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'index'])
             ->name('admin-dashboard-transactions');
+        Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'detail'])
+            ->name('admin-dashboard-transaction-details');
+
+        Route::post('/dashboard/transactions/{id}', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'update'])
+            ->name('admin-dashboard-transaction-update');
     });
 
 Auth::routes();

@@ -39,6 +39,7 @@
                         <table class="table table-borderless table-cart">
                             <thead>
                                 <tr>
+                                    <th scope="col"></th>
                                     <th>Image</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
@@ -52,6 +53,9 @@
                                 @endphp
                                 @foreach ($carts as $cart)
                                     <tr>
+                                        <td style="width: 5%;">
+                                            <input type="checkbox" name="id[]" value="{{ $cart->id }}">
+                                        </td>
                                         <td style="width: 15%">
                                             @if ($cart->product->galleries)
                                                 <img src="{{ Storage::url($cart->product->galleries->first()->photos) }}"
