@@ -44,8 +44,8 @@
                         </transition>
                     </div>
                     <div class="col-lg-2">
-                        <div class="row">
-                            <div class="col-3 col-lg-12 mt-2 mt-lg-0" v-for="(photo, index) in photos"
+                        <div class="row pl-2 pr-2">
+                            <div class="col-3 col-lg-12 mt-2 mt-lg-0 mr-0 thumbnail" v-for="(photo, index) in photos"
                                 :key="photo.id" data-aos="zoom-in" data-aos-delay="100">
                                 <a href="#" @click="changeActive(index)">
                                     <img :src="photo.url" alt="" class="w-100 thumbnail-image"
@@ -75,9 +75,17 @@
                                 <form action="{{ route('detail-add', $product->id) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <button type="submit" class="btn btn-success px-4 text-white btn-block mb-3">
-                                        Add to Cart
-                                    </button>
+                                    @if ($product->stock > 0)
+                                        <div class="stock text-muted">Stock Tersedia : {{ $product->stock }}</div>
+                                        <button type="submit" class="btn btn-success px-4 text-white btn-block mb-3">
+                                            Add to Cart
+                                        </button>
+                                    @else
+                                        <div class="stock text-muted">Stock Tersedia : {{ $product->stock }}</div>
+                                        <button type="submit" class="btn btn-warning px-4 text-white btn-block mb-3" disabled>
+                                            Add to Cart
+                                        </button>
+                                    @endif
                                 </form>
                             @else
                                 <a href="{{ route('login') }}" class="btn btn-success px-4 text-white btn-block mb-3">
@@ -91,7 +99,10 @@
             <!-- Desc -->
             <section class="store-description">
                 <div class="container">
-                    <div class="row">
+                    <div class="row ">
+                        <div class="col-12 col-lg-8 mt-3">
+                            <h5>Deskripsi Produk</h5>
+                        </div>
                         <div class="col-12 col-lg-8">
                             <p>
                                 {!! $product->description !!}
@@ -114,98 +125,31 @@
                     <h5 class="mt-4 mb-2">Produk Yang Mungkin Anda Sukai</h5>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-xl-8 col-lg-8 col-md-12 col-sm-12 items">
-                        <div id="owl-carousel" class="owl-carousel owl-theme">
-                            <div class="item">
-                                <div data-aos="fade-up" data-aos-delay="100">
-                                    <a href="details.html" class="component-products d-block">
+                    <div class="col-12 col-xl-10 col-lg-10">
+                        <div class="owl-carousel owl-theme">
+                            @php
+                                $incrementProduct = 0;
+                            @endphp
+                            @forelse ($products as $item)
+                                <div data-aos="fade-up" data-aos-delay="{{ $incrementProduct += 100 }}">
+                                    <a href="{{ route('detail', $product->slug) }}" class="component-products d-block">
                                         <div class="product-thumbnail">
                                             <div class="products-image"
                                                 style="
-                            background-image: url('/images/product-sepatu.jpg');
+                            @if ($item->galleries->count()) background-image: url('{{ Storage::url($item->galleries->first()->photos) }}')
+                                        @else 
+                                        background-color: #eee @endif
                           ">
                                             </div>
                                         </div>
-                                        <div class="products-text">Apple Watch 4</div>
-                                        <div class="products-price">Rp. 100.000</div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div data-aos="fade-up" data-aos-delay="100">
-                                    <a href="details.html" class="component-products d-block">
-                                        <div class="product-thumbnail">
-                                            <div class="products-image"
-                                                style="
-                            background-image: url('/images/product-sepatu.jpg');
-                          ">
-                                            </div>
+                                        <div class="products-text">{{ $item->name }}</div>
+                                        <div class="products-price">Rp.
+                                            {{ number_format($item->price, 0, ',', '.') }}
                                         </div>
-                                        <div class="products-text">Apple Watch 4</div>
-                                        <div class="products-price">Rp. 100.000</div>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="item">
-                                <div data-aos="fade-up" data-aos-delay="100">
-                                    <a href="details.html" class="component-products d-block">
-                                        <div class="product-thumbnail">
-                                            <div class="products-image"
-                                                style="
-                            background-image: url('/images/product-sepatu.jpg');
-                          ">
-                                            </div>
-                                        </div>
-                                        <div class="products-text">Apple Watch 4</div>
-                                        <div class="products-price">Rp. 100.000</div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div data-aos="fade-up" data-aos-delay="100">
-                                    <a href="details.html" class="component-products d-block">
-                                        <div class="product-thumbnail">
-                                            <div class="products-image"
-                                                style="
-                            background-image: url('/images/product-sepatu.jpg');
-                          ">
-                                            </div>
-                                        </div>
-                                        <div class="products-text">Apple Watch 4</div>
-                                        <div class="products-price">Rp. 100.000</div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div data-aos="fade-up" data-aos-delay="100">
-                                    <a href="details.html" class="component-products d-block">
-                                        <div class="product-thumbnail">
-                                            <div class="products-image"
-                                                style="
-                            background-image: url('/images/product-sepatu.jpg');
-                          ">
-                                            </div>
-                                        </div>
-                                        <div class="products-text">Apple Watch 4</div>
-                                        <div class="products-price">Rp. 100.000</div>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div data-aos="fade-up" data-aos-delay="100">
-                                    <a href="details.html" class="component-products d-block">
-                                        <div class="product-thumbnail">
-                                            <div class="products-image"
-                                                style="
-                            background-image: url('/images/product-sepatu.jpg');
-                          ">
-                                            </div>
-                                        </div>
-                                        <div class="products-text">Apple Watch 4</div>
-                                        <div class="products-price">Rp. 100.000</div>
-                                    </a>
-                                </div>
-                            </div>
+                            @empty
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -248,8 +192,8 @@
         integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $("#owl-carousel").owlCarousel({
-            loop: false,
+        $(".owl-carousel").owlCarousel({
+            loop: true,
             margin: 20,
             dots: false,
             items: 3,

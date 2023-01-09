@@ -80,7 +80,7 @@
                         $incrementProduct = 0;
                     @endphp
                     @forelse ($products as $product)
-                        <div class="col-4 col-md-3 col-lg-2" data-aos="fade-up"
+                        <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up"
                             data-aos-delay="{{ $incrementProduct += 100 }}">
                             <a href="{{ route('detail', $product->slug) }}" class="component-products d-block">
                                 <div class="product-thumbnail">

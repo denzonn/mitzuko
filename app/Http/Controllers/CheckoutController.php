@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Exception;
@@ -16,13 +17,19 @@ class CheckoutController extends Controller
 {
     public function process(Request $request)
     {
-        //Save User Data
+        // Save User Data
         $user = Auth::user();
         $user->update($request->except('total_price'));
 
         // Process Checkout
         $code = 'MITZUKO-' . mt_rand(0000, 9999);
+
+        // Ambil ID Checkbox yang di pilih kemudian ubah id dari string ke array
+        $ids = $request->input('id', []);
+        $id_string = explode(',', $ids);
+
         $carts = Cart::with(['product', 'user'])
+            ->whereIn('id', $id_string)
             ->where('users_id', Auth::user()->id)
             ->get();
 
@@ -38,6 +45,7 @@ class CheckoutController extends Controller
         //Transaction Detail Create
         foreach ($carts as $cart) {
             $trx = 'TRX-' . mt_rand(0000, 9999);
+            $quantity = $cart->quantity;
 
             TransactionDetail::create([
                 'users_id' => Auth::user()->id,
@@ -45,13 +53,18 @@ class CheckoutController extends Controller
                 'transactions_id' => $transaction->id,
                 'products_id' => $cart->product->id,
                 'price' => $cart->product->price,
+                'quantity' => $quantity,
                 'resi' => '',
                 'shipping_status' => 'PENDING',
             ]);
+
+            // Update Stock Product
+            $cart->product->decrement('stock', $quantity);
         }
 
         //Delete Cart Data
         Cart::where('users_id', Auth::user()->id)
+            ->whereIn('id', $id_string)
             ->delete();
 
         //Midtrans Configuration

@@ -10,7 +10,7 @@ class TransactionDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code', 'products_id', 'transactions_id', 'price', 'resi', 'shipping_status'
+        'code', 'products_id', 'transactions_id', 'price', 'quantity', 'resi', 'shipping_status'
     ];
 
     protected $hidden = [];

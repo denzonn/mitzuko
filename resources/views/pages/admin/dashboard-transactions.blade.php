@@ -26,10 +26,10 @@
                                                 <img src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
                                                     alt="" />
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 {{ $transaction->product->name }}
                                             </div>
-                                            <div class="col-md-3 text-muted">
+                                            <div class="col-md-2 text-muted">
                                                 by {{ $transaction->product->brand }}
                                             </div>
                                             <div class="col-md-3">

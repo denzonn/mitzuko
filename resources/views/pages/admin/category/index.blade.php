@@ -29,13 +29,13 @@
                                     + Tambah Category Baru</a>
                                 <div class="row mt-4">
                                     @foreach ($categories as $category)
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                        <div class="col-4 col-md-3 col-lg-2">
                                             <a href="{{ route('category.edit', $category->id) }}"
                                                 class="card-dashboard-product d-block">
                                                 <div class="card card-body mb-3">
                                                     <img src="{{ Storage::url($category->photo ?? '') }}" alt=""
                                                         class="w-100 mb-2 product-photo" />
-                                                    <div class="product-title">{{ $category->name }}</div>
+                                                    <div class="product-title text-center">{{ $category->name }}</div>
                                                 </div>
                                                 <a href="{{ route('admin-dashboard-category-delete', $category->id) }}"
                                                     class="delete-gallery">

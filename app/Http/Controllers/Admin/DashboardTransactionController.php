@@ -11,7 +11,9 @@ class DashboardTransactionController extends Controller
 {
     public function index()
     {
-        $buyTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])->get();
+        $buyTransactions = TransactionDetail::with(['transaction.user', 'product.galleries'])
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('pages.admin.dashboard-transactions', [
             'buyTransactions' => $buyTransactions,
         ]);

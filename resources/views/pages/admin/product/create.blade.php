@@ -36,14 +36,20 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Price</label>
-                                                <input type="number" class="form-control" name="price" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
                                                 <label>Product Brand</label>
                                                 <input type="text" class="form-control" name="brand" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Stock</label>
+                                                <input type="number" class="form-control" name="stock" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Price</label>
+                                                <input type="number" class="form-control" name="price" />
                                             </div>
                                         </div>
                                         <div class="col-md-12">

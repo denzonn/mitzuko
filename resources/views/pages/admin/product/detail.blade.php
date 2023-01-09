@@ -8,7 +8,7 @@
     <div class="section-content section-dashboard-home" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
-                <h2 class="dashboard-title">Bed Cover</h2>
+                <h2 class="dashboard-title">{{ $product->name }}</h2>
                 <p class="dashboard-subtitle">Product Details</p>
             </div>
             <div class="dashboard-content">
@@ -38,16 +38,23 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Price</label>
-                                                <input type="number" class="form-control" name="price"
-                                                    value="{{ $product->price }}" />
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
                                                 <label>Product Brand</label>
                                                 <input type="text" class="form-control" name="brand"
                                                     value="{{ $product->brand }}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Stock</label>
+                                                <input type="number" class="form-control" name="stock"
+                                                    value="{{ $product->stock }}" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Price</label>
+                                                <input type="number" class="form-control" name="price"
+                                                    value="{{ $product->price }}" />
                                             </div>
                                         </div>
                                         <div class="col-md-12">

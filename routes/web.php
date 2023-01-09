@@ -41,11 +41,13 @@ Route::group(['middleware' => ['auth']], function () {
     // Cart
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])
         ->name('cart');
+    Route::get('/cart/pricing', [App\Http\Controllers\CartController::class, 'pricing'])
+        ->name('cart-pricing');
     Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'delete'])
         ->name('cart-delete');
 
     //Midtrans
-    Route::post('/checkout', [App\Http\Controllers\CheckoutController::class, 'process'])
+    Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'process'])
         ->name('checkout');
 
     // Dashboard
@@ -56,7 +58,6 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('dashboard-transaction');
     Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])
         ->name('dashboard-transaction-details');
-
 
     Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])
         ->name('dashboard-settings-account');
