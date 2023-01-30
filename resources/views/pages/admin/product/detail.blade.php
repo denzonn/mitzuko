@@ -154,4 +154,36 @@
             document.getElementById("file").click();
         }
     </script>
+
+    <script>
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                data: new FormData(form[0]),
+                contentType: false,
+                processData: false,
+                success: function() {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'Product berhasil diupdate',
+                        icon: 'success',
+                    });
+                    setTimeout(() => {
+                        window.location.href = "{{ route('product.index') }}";
+                    }, 2000); // 2000 ms = 2 detik
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: xhr.responseJSON.message,
+                        icon: 'error',
+                    });
+                }
+            });
+        });
+    </script>
 @endpush

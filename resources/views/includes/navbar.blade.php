@@ -7,12 +7,21 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto ">
                 <li class="nav-item {{ request()->is('/*') ? 'active' : '' }}">
                     <a href="{{ route('home') }}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item {{ request()->is('/categories') ? 'active' : '' }}">
                     <a href="{{ route('categories') }}" class="nav-link">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <form action="/product" method="GET" enctype="multipart/form-data">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search" class="wide" name="search"
+                                value="{{ request('search') }}">
+                            <input type="hidden" value="submit">
+                        </div>
+                    </form>
                 </li>
                 @guest
                     <li class="nav-item">

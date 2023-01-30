@@ -23,7 +23,7 @@
                         <nav>
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="index.html">Home</a>
+                                    <a href="index.html" style="text-decoration: none">Home</a>
                                 </li>
                                 <li class="breadcrumb-item active">Product Details</li>
                             </ol>
@@ -121,37 +121,58 @@
                         <hr />
                     </div>
                 </div>
-                <div class="row">
-                    <h5 class="mt-4 mb-2">Produk Yang Mungkin Anda Sukai</h5>
+                <div class="row" data-aos="fade-up" data-aos-delay="150">
+                    <h5 class="mt-4 mb-2" style="color: #ff7158">Produk Yang Mungkin Anda Sukai</h5>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-xl-10 col-lg-10">
-                        <div class="owl-carousel owl-theme">
-                            @php
-                                $incrementProduct = 0;
-                            @endphp
-                            @forelse ($products as $item)
-                                <div data-aos="fade-up" data-aos-delay="{{ $incrementProduct += 100 }}">
-                                    <a href="{{ route('detail', $product->slug) }}" class="component-products d-block">
-                                        <div class="product-thumbnail">
-                                            <div class="products-image"
-                                                style="
+                    @php
+                        $incrementProduct = 0;
+                    @endphp
+                    @forelse ($recomendationOne as $item)
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div data-aos="fade-up" data-aos-delay="{{ $incrementProduct += 100 }}">
+                                <a href="{{ route('detail', $item->slug) }}" class="component-products d-block">
+                                    <div class="product-thumbnail" style="height: 250px">
+                                        <div class="products-image"
+                                            style="
                             @if ($item->galleries->count()) background-image: url('{{ Storage::url($item->galleries->first()->photos) }}')
                                         @else 
                                         background-color: #eee @endif
                           ">
-                                            </div>
                                         </div>
-                                        <div class="products-text">{{ $item->name }}</div>
-                                        <div class="products-price">Rp.
-                                            {{ number_format($item->price, 0, ',', '.') }}
-                                        </div>
-                                    </a>
-                                </div>
-                            @empty
-                            @endforelse
+                                    </div>
+                                    <div class="products-text">{{ $item->name }}</div>
+                                    <div class="products-price">Rp.
+                                        {{ number_format($item->price, 0, ',', '.') }}
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @empty
+                    @endforelse
+
+                    @forelse ($recomendationTwo as $item)
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div data-aos="fade-up" data-aos-delay="{{ $incrementProduct += 100 }}">
+                                <a href="{{ route('detail', $item->slug) }}" class="component-products d-block">
+                                    <div class="product-thumbnail" style="height: 250px">
+                                        <div class="products-image"
+                                            style="
+                            @if ($item->galleries->count()) background-image: url('{{ Storage::url($item->galleries->first()->photos) }}')
+                                        @else 
+                                        background-color: #eee @endif
+                          ">
+                                        </div>
+                                    </div>
+                                    <div class="products-text">{{ $item->name }}</div>
+                                    <div class="products-price">Rp.
+                                        {{ number_format($item->price, 0, ',', '.') }}
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
         </section>
@@ -180,35 +201,6 @@
             methods: {
                 changeActive(id) {
                     this.activePhoto = id;
-                },
-            },
-        });
-    </script>
-    <script src="/script/navbar-scroll.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.2/jquery.min.js"
-        integrity="sha512-tWHlutFnuG0C6nQRlpvrEhE4QpkG1nn2MOUMWmUeRePl4e3Aki0VB6W1v3oLjFtd0hVOtRQ9PHpSfN6u6/QXkQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        $(".owl-carousel").owlCarousel({
-            loop: true,
-            margin: 20,
-            dots: false,
-            items: 3,
-            responsive: {
-                0: {
-                    items: 3,
-                },
-                767: {
-                    items: 3,
-                },
-                990: {
-                    items: 4,
-                },
-                1000: {
-                    items: 4,
                 },
             },
         });

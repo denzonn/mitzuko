@@ -17,4 +17,9 @@ class Category extends Model
     ];
 
     protected $hidden = [];
+
+    public function recomendations()
+    {
+        return $this->hasMany(RecomendationCategory::class, 'categories_id', 'id');
+    }
 }

@@ -12,24 +12,29 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        //Relasikan dahulu dengan galleries untuk mengambil gambarnya
-        $products = Product::with(['galleries'])->paginate(32);
+        $products = Product::join('transaction_details', 'products.id', '=', 'transaction_details.products_id')
+            ->selectRaw('products.*, sum(transaction_details.quantity) as total_purchases')
+            ->groupBy('products.id')
+            ->orderBy('total_purchases', 'desc')->limit(20)
+            ->get();
+
         return view('pages.category', [
-            'categories' => $categories,
             'products' => $products,
+            'categories' => $categories,
         ]);
     }
 
     public function detail(Request $request, $slug)
-    {
-        $categories = Category::all();
+    {        //Relasikan dahulu dengan galleries untuk mengambil gambarnya
+        $category = Category::where('slug', $slug)
+            ->firstOrFail();
 
-        //Relasikan dahulu dengan galleries untuk mengambil gambarnya
-        $category = Category::where('slug', $slug)->firstOrFail();
+        $products = Product::with(['galleries'])
+            ->where('categories_id', $category->id)
+            ->get();
 
-        $products = Product::with(['galleries'])->where('categories_id', $category->id)->paginate(32);
-        return view('pages.category', [
-            'categories' => $categories,
+        return view('pages.category-detail', [
+            'category' => $category,
             'products' => $products,
         ]);
     }

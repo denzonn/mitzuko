@@ -25,6 +25,28 @@ class ProductController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        // dd($request);
+        // if ($request->has('search')) {
+        //     $products = Product::where('name', 'LIKE', '%' . $request->search . '%')->get();
+        //     dd($products);
+        // } else {
+        //     $products = Product::with(['galleries', 'category'])->get();
+        // }
+
+        // return view('pages.admin.product.index', [
+        //     'products' => $products
+        // ]);
+        $keyword = $request['search'];
+
+        $products = Product::where('name', 'like', '%' . $keyword . '%')->get();
+
+        return view('pages.admin.product.index', [
+            'products' => $products
+        ]);
+    }
+
     public function detail(Request $request, $id)
     {
         $product = Product::with(['galleries', 'category'])->findOrFail($id);

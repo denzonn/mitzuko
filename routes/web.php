@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
+Route::get('/product', [App\Http\Controllers\HomeController::class, 'product'])
+    ->name('product');
 
 Route::get('/categories', [App\Http\Controllers\CategoryController::class, 'index'])
     ->name('categories');
@@ -30,7 +32,6 @@ Route::post('/details/{id}', [App\Http\Controllers\DetailController::class, 'add
 
 Route::post('/checkout/callback', [App\Http\Controllers\CheckoutController::class, 'callback'])
     ->name('midtrans-callback');
-
 Route::get('/success', [App\Http\Controllers\CartController::class, 'success'])
     ->name('success');
 
@@ -49,6 +50,8 @@ Route::group(['middleware' => ['auth']], function () {
     //Midtrans
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'process'])
         ->name('checkout');
+    Route::get('/payment/{id}', [App\Http\Controllers\CheckoutController::class, 'payment'])
+        ->name('payment');
 
     // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
@@ -56,14 +59,21 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard/transactions', [App\Http\Controllers\DashboardTransactionController::class, 'index'])
         ->name('dashboard-transaction');
-    Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'details'])
+    Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'detail'])
         ->name('dashboard-transaction-details');
+    Route::get('/dashboard/transactions/success/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'success'])
+        ->name('dashboard-transaction-success');
+    Route::get('/dashboard/transactions/cancel/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'cancel'])
+        ->name('dashboard-transaction-cancel');
 
     Route::get('/dashboard/account', [App\Http\Controllers\DashboardSettingController::class, 'account'])
         ->name('dashboard-settings-account');
     Route::post('/dashboard/account/update', [App\Http\Controllers\DashboardSettingController::class, 'update'])
         ->name('dashboard-settings-account-update');
 });
+
+Route::get('/admin/product/search', [App\Http\Controllers\Admin\ProductController::class, 'search'])
+    ->name('admin-dashboard-product-search');
 
 // Admin Routes
 Route::prefix('admin')
@@ -85,6 +95,7 @@ Route::prefix('admin')
         Route::get('/product/delete/{id}', [App\Http\Controllers\Admin\ProductController::class, 'destroy'])
             ->name('admin-dashboard-product-delete');
 
+
         Route::get('/product/detail/{id}', [App\Http\Controllers\Admin\ProductController::class, 'detail'])
             ->name('admin-dashboard-product-details');
         Route::post('/product/detail/{id}', [App\Http\Controllers\Admin\ProductController::class, 'update'])
@@ -99,6 +110,8 @@ Route::prefix('admin')
             ->name('admin-dashboard-transactions');
         Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'detail'])
             ->name('admin-dashboard-transaction-details');
+        Route::get('/dashboard/transactions/success/{id}', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'success'])
+            ->name('admin-dashboard-transaction-success');
 
         Route::post('/dashboard/transactions/{id}', [App\Http\Controllers\Admin\DashboardTransactionController::class, 'update'])
             ->name('admin-dashboard-transaction-update');

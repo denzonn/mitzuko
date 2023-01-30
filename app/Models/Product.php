@@ -33,4 +33,29 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'categories_id', 'id');
     }
+
+    //Query scope pencarian
+    public function scopeFilter($query)
+    {
+        $searchKeyword = request('search');
+
+        if (request('search')) {
+            return $query = $query->where('name', 'like', '%' . $searchKeyword . '%')
+                ->orWhere('description', 'like', '%' . $searchKeyword . '%');
+        }
+    }
+
+    // public function scopeCheapest($query, $search)
+    // {
+    //     return $query->where('name', 'like', '%' . $search . '%')
+    //         ->orderBy('price', 'asc')
+    //         ->get();
+    // }
+
+    // public function scopeMostExpensive($query, $search)
+    // {
+    //     return $query->where('name', 'like', '%' . $search . '%')
+    //         ->orderBy('price', 'desc')
+    //         ->get();
+    // }
 }

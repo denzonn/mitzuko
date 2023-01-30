@@ -12,6 +12,7 @@
     @stack('prepend-style')
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link href="/style/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.16/dist/sweetalert2.min.css">
     @stack('addon-style')
 </head>
 
@@ -22,7 +23,9 @@
             <!-- Sidebar -->
             <div class="border-right" id="sidebar-wrapper">
                 <div class="sidebard-heading text-center">
-                    <img src="/images/dashboard-logo.svg" alt="" class="my-4" />
+                    <a href="{{ route('home') }}">
+                        <img src="/images/dashboard-user.png" alt="" class="w-50 my-4" />
+                    </a>
                 </div>
                 <div class="list-group list-group-flush">
                     <a href="{{ route('dashboard') }}"
@@ -120,6 +123,7 @@
     <script src="/vendor/jquery/jquery.slim.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
     <script>
         AOS.init();
     </script>
