@@ -15,8 +15,10 @@ class Product extends Model
         'brand',
         'categories_id',
         'price',
+        'stock',
         'description',
         'slug',
+        'variant_product_id',
     ];
 
     protected $hidden = [];
@@ -32,4 +34,57 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'categories_id', 'id');
     }
+
+    // Relasi ke table transaction detail
+    public function transactionDetail()
+    {
+        return $this->hasMany(TransactionDetail::class, 'products_id', 'id');
+    }
+
+    // Relasi ke table variant product
+    public function variantProduct()
+    {
+        return $this->belongsTo(VariantProduct::class, 'variant_product_id', 'id');
+    }
+
+    // Relasi ke table variant type
+    public function variantType()
+    {
+        return $this->hasMany(VariantType::class, 'products_id', 'id');
+    }
+
+    public function product_review()
+    {
+        return $this->hasMany(ProductReview::class, 'products_id', 'id');
+    }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class, 'products_id', 'id');
+    }
+
+    //Query scope pencarian
+    public function scopeFilter($query)
+    {
+        $searchKeyword = request('search');
+
+        if (request('search')) {
+            return $query = $query->where('name', 'like', '%' . $searchKeyword . '%')
+                ->orWhere('description', 'like', '%' . $searchKeyword . '%');
+        }
+    }
+
+    // public function scopeCheapest($query, $search)
+    // {
+    //     return $query->where('name', 'like', '%' . $search . '%')
+    //         ->orderBy('price', 'asc')
+    //         ->get();
+    // }
+
+    // public function scopeMostExpensive($query, $search)
+    // {
+    //     return $query->where('name', 'like', '%' . $search . '%')
+    //         ->orderBy('price', 'desc')
+    //         ->get();
+    // }
 }

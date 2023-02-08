@@ -29,6 +29,7 @@ class User extends Authenticatable
         'regencies_id',
         'zip_code',
         'country',
+        'photo',
     ];
 
     /**
@@ -49,4 +50,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function provinces()
+    {
+        return $this->belongsTo(Province::class, 'provinces_id', 'id');
+    }
+
+    public function regencies()
+    {
+        return $this->belongsTo(Regency::class, 'regencies_id', 'id');
+    }
+
+    public function productComment()
+    {
+        return $this->hasMany(ProductComment::class, 'users_id', 'id');
+    }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class, 'users_id', 'id');
+    }
 }

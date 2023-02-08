@@ -31,7 +31,7 @@
                                 <label>Phone Number</label>
                                 <input id="phone-number" type="number"
                                     class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
-                                    v-model="phone_number" maxlength="17" required autocomplete="new-phone">
+                                    v-model="phone_number" required maxlength="12">
 
                                 @error('phone_number')
                                     <span class="invalid-feedback" role="alert">

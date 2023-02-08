@@ -12,6 +12,10 @@
     @stack('prepend-style')
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link href="/style/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.16/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     @stack('addon-style')
 </head>
 
@@ -22,22 +26,19 @@
             <!-- Sidebar -->
             <div class="border-right" id="sidebar-wrapper">
                 <div class="sidebard-heading text-center">
-                    <img src="/images/dashboard-logo.svg" alt="" class="my-4" />
+                    <a href="{{ route('home') }}">
+                        <img src="/images/dashboard-user.png" alt="" class="w-50 my-4" />
+                    </a>
                 </div>
                 <div class="list-group list-group-flush">
-                    <a href="{{ route('dashboard') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('dashboard') ? 'active' : '' }}">
-                        Dashboard
+                    <a href="{{ route('dashboard-settings-account') }}"
+                        class="list-group-item list-group-item-action {{ request()->is('dashboard/account*') ? 'active' : '' }}">
+                        My Account
                     </a>
                     <a href="{{ route('dashboard-transaction') }}"
                         class="list-group-item list-group-item-action {{ request()->is('dashboard/transaction*') ? 'active' : '' }}">
                         Transaction
                     </a>
-                    <a href="{{ route('dashboard-settings-account') }}"
-                        class="list-group-item list-group-item-action {{ request()->is('dashboard/account*') ? 'active' : '' }}">
-                        My Account
-                    </a>
-
                     <a href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                         class="list-group-item list-group-item-action">Sign Out</a>
@@ -64,11 +65,10 @@
                                 <li class="nav-item dropdown">
                                     <a href="#" class="nav-link" id="navbarDropdown" role="button"
                                         data-toggle="dropdown">
-                                        <img src="/images/user_pc.png" alt=""
+                                        <img src="{{ Storage::url(Auth::user()->photo) }}" alt=""
                                             class="rounded-circle mr-2 profile-picture" />Hi,
                                         {{ Auth::user()->name }}</a>
                                     <div class="dropdown-menu">
-                                        <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
                                         <a href="{{ route('dashboard-settings-account') }}"
                                             class="dropdown-item">Settings</a>
                                         <div class="dropdown-divider"></div>
@@ -120,6 +120,7 @@
     <script src="/vendor/jquery/jquery.slim.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.0/dist/sweetalert2.all.min.js"></script>
     <script>
         AOS.init();
     </script>

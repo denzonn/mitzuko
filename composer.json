@@ -9,6 +9,7 @@
         "azishapidin/indoregion": "^3.0",
         "doctrine/dbal": "^3.5",
         "guzzlehttp/guzzle": "^7.2",
+        "jorenvanhocht/laravel-share": "^4.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
