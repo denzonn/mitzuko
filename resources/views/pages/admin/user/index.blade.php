@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="section-content section-dashboard-home" data-aos="fade-up">
+    <div class="section-content section-dashboard-home mb-5" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
                 <h2 class="dashboard-title">User</h2>

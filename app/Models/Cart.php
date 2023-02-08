@@ -12,7 +12,8 @@ class Cart extends Model
     protected $fillable = [
         'products_id',
         'users_id',
-        'quantity'
+        'quantity',
+        'variant_type_id'
     ];
 
     protected $hidden = [];
@@ -25,5 +26,10 @@ class Cart extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'users_id', 'id');
+    }
+
+    public function variant_type()
+    {
+        return $this->hasOne(VariantType::class, 'id', 'variant_type_id');
     }
 }

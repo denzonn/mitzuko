@@ -62,11 +62,20 @@
                                                     alt="" class="cart-image" />
                                             @endif
                                         </td>
-                                        <td style="width: 30%">
+                                        <td style="width: 45%">
                                             <div class="product-title">{{ $cart->product->name }}</div>
-                                            <div class="product-subtitle">by {{ $cart->product->brand }}</div>
+                                            <span class="product-subtitle">
+                                                @foreach ($variantData as $item)
+                                                    @if ($item->id == $cart->variant_type_id)
+                                                        Variant : {{ $item->name }}
+                                                    @endif
+                                                @endforeach
+                                                @if (empty($cart->variant_type_id))
+                                                    Variant : -
+                                                @endif
+                                            </span>
                                         </td>
-                                        <td style="width: 20%">
+                                        <td style="width: 15%">
                                             <div class="product-title d-flex">
                                                 <button type="button" id="minus" class="btn btn-sm btn-danger"
                                                     data-id="{{ $cart->id }}"><i class="fa fa-minus"
@@ -80,10 +89,18 @@
                                             </div>
                                             <div class="product-subtitle">Quantity</div>
                                         </td>
-                                        <td style="width: 25%">
-                                            <div class="product-title price">Rp.
-                                                {{ number_format($cart->product->price, 0, ',', '.') }}
+                                        <td style="width: 15%">
+                                            <div class="product-title price">
+                                                @foreach ($variantData as $item)
+                                                    @if ($item->id == $cart->variant_type_id)
+                                                        Rp. {{ number_format($item->price, 0, ',', '.') }}
+                                                    @endif
+                                                @endforeach
+                                                @if (empty($cart->variant_type_id))
+                                                    Rp. {{ number_format($cart->product->price, 0, ',', '.') }}
+                                                @endif
                                             </div>
+
                                             <div class="product-subtitle">Rupiah</div>
                                         </td>
                                         <td style="width: 20%">

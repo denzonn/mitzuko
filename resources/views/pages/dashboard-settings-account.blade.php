@@ -109,6 +109,13 @@
                                                 name="phone_number" value="{{ $user->phone_number }}" />
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="photo">Profil Picture</label>
+                                            <input type="file" class="form-control" id="photo" name="photo" />
+                                            <div class="text-muted">Jika tidak ingin mengganti foto kosongkan saja!</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">
@@ -180,6 +187,72 @@
                     this.getRegenciesData();
                 }
             }
+        });
+    </script>
+
+    <script>
+        document.querySelector("#photo").addEventListener("change", function(event) {
+            // Ambil file yang diupload
+            const file = event.target.files[0];
+
+            // Cek jika file bukan gambar
+            if (!file.type.endsWith("png") && !file.type.endsWith("jpeg") && !file.type.endsWith("jpg")) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'File yang anda upload bukan gambar!',
+                })
+                event.target.value = "";
+                return;
+            } else if (file.size > 2048 * 1024) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Ukuran File Lebih dari 2 Mb!',
+                })
+                event.target.value = "";
+                return;
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'File yang anda upload adalah gambar!',
+                })
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                data: new FormData(form[0]),
+                contentType: false,
+                processData: false,
+                success: function() {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'Profil berhasil diupdate',
+                        icon: 'success',
+                    });
+                    setTimeout(() => {
+                        window.location.href = "{{ route('dashboard-settings-account') }}";
+                    }, 2000); // 2000 ms = 2 detik
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: xhr.responseJSON.message,
+                        icon: 'error',
+                    });
+                }
+            });
         });
     </script>
 @endpush

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Models\VariantType;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -15,8 +16,8 @@ class DashboardTransactionController extends Controller
         $pendingTransactions = Transaction::where('transaction_status', 'PENDING')
             ->with(['transaction_details' => function ($query) {
                 $query->with(['product.galleries'])
-                    ->selectRaw('transactions_id, products_id, count(*) as total_items')
-                    ->groupBy('transactions_id', 'products_id');
+                    ->selectRaw('transactions_id, products_id, variant_type_id, count(*) as total_items')
+                    ->groupBy('transactions_id', 'products_id', 'variant_type_id');
             }])
             ->get();
 
@@ -24,8 +25,8 @@ class DashboardTransactionController extends Controller
             ->where('shipping_status', 'PENDING')
             ->with(['transaction_details' => function ($query) {
                 $query->with(['product.galleries'])
-                    ->selectRaw('transactions_id, products_id, shipping_status, count(*) as total_items')
-                    ->groupBy('transactions_id', 'products_id', 'shipping_status');
+                    ->selectRaw('transactions_id, products_id, shipping_status, variant_type_id, count(*) as total_items')
+                    ->groupBy('transactions_id', 'products_id', 'shipping_status', 'variant_type_id');
             }])
             ->get();
 
@@ -33,23 +34,23 @@ class DashboardTransactionController extends Controller
             ->where('shipping_status', 'SHIPPING')
             ->with(['transaction_details' => function ($query) {
                 $query->with(['product.galleries'])
-                    ->selectRaw('transactions_id, products_id, shipping_status, count(*) as total_items')
-                    ->groupBy('transactions_id', 'products_id', 'shipping_status');
+                    ->selectRaw('transactions_id, products_id, shipping_status, variant_type_id, count(*) as total_items')
+                    ->groupBy('transactions_id', 'products_id', 'shipping_status', 'variant_type_id');
             }])->get();
 
         $doneTransactions = Transaction::where('transaction_status', 'SUCCESS')
             ->where('shipping_status', 'SUCCESS')
             ->with(['transaction_details' => function ($query) {
                 $query->with(['product.galleries'])
-                    ->selectRaw('transactions_id, products_id, shipping_status, count(*) as total_items')
-                    ->groupBy('transactions_id', 'products_id', 'shipping_status');
+                    ->selectRaw('transactions_id, products_id, shipping_status, variant_type_id, count(*) as total_items')
+                    ->groupBy('transactions_id', 'products_id', 'shipping_status', 'variant_type_id');
             }])->get();
 
         $cancelTransactions = Transaction::where('transaction_status', 'CANCELLED')
             ->with(['transaction_details' => function ($query) {
                 $query->with(['product.galleries'])
-                    ->selectRaw('transactions_id, products_id, shipping_status, count(*) as total_items')
-                    ->groupBy('transactions_id', 'products_id', 'shipping_status');
+                    ->selectRaw('transactions_id, products_id, shipping_status, variant_type_id, count(*) as total_items')
+                    ->groupBy('transactions_id', 'products_id', 'shipping_status', 'variant_type_id');
             }])->get();
 
         // $transactions = $pendingTransactions->concat($successTransactions)->concat($shippingTransactions)->concat($doneTransactions)->concat($cancelTransactions);
@@ -57,7 +58,22 @@ class DashboardTransactionController extends Controller
         //     return $transaction->transaction->user->name;
         // });
 
+        // Ambil variant_type_id dari transaction_details
+        $variant = TransactionDetail::where('variant_type_id', '!=', null)
+            ->with(['variant_type'])
+            ->get();
+
+        // Lakukan perulangan $variant
+        $variant_type_id = [];
+        foreach ($variant as $item) {
+            // Ambil variant_type_id dari transaction_details
+            $variant_type_id[] = $item->variant_type_id;
+        }
+        // Ambil data dari variant_type berdasarkan variant_type_id
+        $variantData = VariantType::whereIn('id', $variant_type_id)->get();
+
         return view('pages.admin.dashboard-transactions', [
+            'variantData' => $variantData,
             'pendingTransactions' => $pendingTransactions,
             'successTransactions' => $successTransactions,
             'shippingTransactions' => $shippingTransactions,
@@ -70,8 +86,9 @@ class DashboardTransactionController extends Controller
     {
         $transactions = Transaction::whereHas('transaction_details', function ($query) {
             $query->with(['product.galleries'])
-                ->selectRaw('transactions_id, products_id, count(*) as total_items')
+                ->selectRaw('transactions_id, products_id, variant_type_id, count(*) as total_items')
                 ->groupBy(
+                    'variant_type_id',
                     'transactions_id',
                     'products_id',
                 );
@@ -79,7 +96,22 @@ class DashboardTransactionController extends Controller
 
         // dd($transactions);
 
+        // Ambil variant_type_id dari transaction_details
+        $variant = TransactionDetail::where('variant_type_id', '!=', null)
+            ->with(['variant_type'])
+            ->get();
+
+        // Lakukan perulangan $variant
+        $variant_type_id = [];
+        foreach ($variant as $item) {
+            // Ambil variant_type_id dari transaction_details
+            $variant_type_id[] = $item->variant_type_id;
+        }
+        // Ambil data dari variant_type berdasarkan variant_type_id
+        $variantData = VariantType::whereIn('id', $variant_type_id)->get();
+
         return view('pages.admin.dashboard-transaction-details', [
+            'variantData' => $variantData,
             'transactions' => $transactions,
         ]);
     }

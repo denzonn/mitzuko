@@ -14,6 +14,12 @@
     background: #fdfdfe;
     border-color: #d9d9d9;
     color: black;
+
+    &.hover {
+      background: #fdfdfe;
+      border-color: #d9d9d9;
+      color: black;
+    }
   }
   .buttons {
     .btn-payment {

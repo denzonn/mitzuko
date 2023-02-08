@@ -61,8 +61,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 ">
+                                                            <div class="col-9 col-md-5" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted ">
                                                                 by {{ $detail->product->brand }}
@@ -133,8 +143,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 pl-0">
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $detail->product->brand }}
@@ -191,8 +211,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 pl-0">
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $detail->product->brand }}
@@ -258,8 +288,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 pl-0">
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $detail->product->brand }}
@@ -324,8 +364,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 pl-0">
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $detail->product->brand }}

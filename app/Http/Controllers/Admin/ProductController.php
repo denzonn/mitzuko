@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\ProductRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductGallery;
+use App\Models\VariantProduct;
+use App\Models\VariantType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,18 +46,6 @@ class ProductController extends Controller
 
         return view('pages.admin.product.index', [
             'products' => $products
-        ]);
-    }
-
-    public function detail(Request $request, $id)
-    {
-        $product = Product::with(['galleries', 'category'])->findOrFail($id);
-
-        $categories = Category::all();
-
-        return view('pages.admin.product.detail', [
-            'product' => $product,
-            'categories' => $categories
         ]);
     }
 
@@ -99,9 +89,11 @@ class ProductController extends Controller
     {
         //Relasi untuk memanggil di View
         $categories = Category::all();
+        $variantProduct = VariantProduct::all();
 
         return view('pages.admin.product.create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'variantProduct' => $variantProduct
         ]);
     }
 
@@ -115,10 +107,26 @@ class ProductController extends Controller
     {
         $data = $request->all();
 
+        // Product
         $data['slug'] = \Str::slug($request->name);
-
         $product = Product::create($data);
 
+        // Variant Product
+        $variants = [];
+        foreach ($request->variant_name as $key => $value) {
+            $variant = [
+                'products_id' => $product->id,
+                'variant_product_id' => $request->variant_product_id ?? 0,
+                'name' => $value ?? 'No Variant',
+                'price' => $request->variant_price[$key] ?? 0,
+                'stock' => $request->variant_stock[$key] ?? 0,
+            ];
+            $variants[] = $variant;
+
+            VariantType::create($variant);
+        }
+
+        // Gallery Product
         if ($request->hasFile('photo')) {
             $images = $request->file('photo');
 
@@ -127,12 +135,10 @@ class ProductController extends Controller
             $random = \Str::random(10);
             $file_name = "product-gallery" . $random . "." . $extension;
         }
-
         $gallery = [
             'products_id' => $product->id,
             'photos' => $request->file('photo')->storeAs('public/assets/product-gallery', $file_name)
         ];
-
         ProductGallery::create($gallery);
 
         return redirect()->route('product.index');
@@ -147,6 +153,31 @@ class ProductController extends Controller
     public function show($id)
     {
         //
+    }
+
+
+    public function detail(Request $request, $id)
+    {
+        $product = Product::with(['galleries', 'category', 'variantProduct'])->findOrFail($id);
+
+        $categories = Category::all()->except($product->categories_id);
+
+        // Ambil data variant product
+        $variantProduct = VariantProduct::all()->except($product->variant_product_id);
+
+        // Cek dahulu apakah ada variant product kalau ada maka ambil variant typenya berdasarkan product id
+        if (isset($product->variant_product_id)) {
+            $variantType = VariantType::where('products_id', $product->id)->get();
+        } else {
+            $variantType = null;
+        }
+
+        return view('pages.admin.product.detail', [
+            'variantType' => $variantType,
+            'variantProduct' => $variantProduct,
+            'product' => $product,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -175,13 +206,39 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
+        // Product
         $data = $request->all();
-
         $item = Product::findOrFail($id);
-
         $data['slug'] = \Str::slug($request->name);
-
         $item->update($data);
+
+        // Update Variant Product
+        $variant_ids = [];
+        foreach ($request->variant_name as $key => $value) {
+            $variant = [
+                'products_id' => $item->id,
+                'variant_product_id' => $request->variant_product_id ?? 0,
+                'name' => $value ?? 'No Variant',
+                'price' => $request->variant_price[$key] ?? 0,
+                'stock' => $request->variant_stock[$key] ?? 0,
+            ];
+
+            $variant_id = VariantType::updateOrCreate(
+                [
+                    'products_id' => $item->id,
+                    'variant_product_id' => $variant['variant_product_id'],
+                    'name' => $variant['name'],
+                    'price' => $variant['price'],
+                    'stock' => $variant['stock'],
+                ],
+                $variant
+            );
+            $variant_ids[] = $variant_id->id;
+        }
+
+        VariantType::whereNotIn('id', $variant_ids)
+            ->where('products_id', $item->id)
+            ->delete();
 
         return redirect()->route('product.index');
     }
@@ -194,8 +251,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
+        // Product
         $item = Product::findOrFail($id);
         $item->delete();
+
+        // Variant Product
+        $variant = VariantType::where('products_id', $id);
+        $variant->delete();
 
         return redirect()->route('product.index');
     }

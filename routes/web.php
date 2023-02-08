@@ -39,6 +39,12 @@ Route::get('/register/success', [App\Http\Controllers\Auth\RegisterController::c
     ->name('register-success');
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/mywishlist', [App\Http\Controllers\WishlistController::class, 'index'])
+        ->name('myWishlist');
+    Route::post('/wishlist', [App\Http\Controllers\WishlistController::class, 'wishlist'])
+        ->name('wishlist');
+
     // Cart
     Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])
         ->name('cart');
@@ -61,6 +67,10 @@ Route::group(['middleware' => ['auth']], function () {
         ->name('dashboard-transaction');
     Route::get('/dashboard/transactions/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'detail'])
         ->name('dashboard-transaction-details');
+    Route::get('/dashboard/transactions/review/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'review'])
+        ->name('dashboard-transaction-review');
+    Route::post('/dashboard/transactions/review/add', [App\Http\Controllers\DashboardTransactionController::class, 'addReview'])
+        ->name('dashboard-transaction-add-review');
     Route::get('/dashboard/transactions/success/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'success'])
         ->name('dashboard-transaction-success');
     Route::get('/dashboard/transactions/cancel/{id}', [App\Http\Controllers\DashboardTransactionController::class, 'cancel'])

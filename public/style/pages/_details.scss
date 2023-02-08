@@ -90,6 +90,134 @@
       color: #ff7158;
       margin-bottom: 10px;
     }
+
+    .btn-variant {
+      border: 1px solid #d7d7d7;
+      box-shadow: none;
+
+      &:hover {
+        border: 1px solid #ff7158;
+        box-shadow: 0 0 2px 0 #ff7158;
+      }
+
+      &.clicked {
+        border: 1px solid #ff7158;
+        box-shadow: 0 0 2px 0 #ff7158;
+      }
+    }
+
+    // Social Media
+    #social-links ul li {
+      display: inline-block;
+    }
+    #social-links ul li a {
+      padding: 5px;
+      margin: 3px;
+      font-size: 25px;
+      color: #ff7158;
+      transition: all 0.3s ease;
+    }
+    #social-links ul li:hover {
+      transform: translateY(-5px);
+    }
+
+    // End Social Media
+
+    .wishlist-heart-group {
+      $size: 30px;
+      $heart-color: rgba(248, 51, 42, 1);
+      display: inline-block;
+      height: $size;
+      position: relative;
+      width: $size;
+      input[type='checkbox'] {
+        // Hide the checkbox, but leave it accessible
+        left: -999999px;
+        position: absolute;
+        top: -999999px;
+        & + label svg {
+          // Set the base rotation
+          transform: rotate(0deg);
+        }
+        &:checked + label svg {
+          // Wiggle Animation on check
+          animation: wishlist-heart-wiggle 400ms 50ms forwards ease-in-out;
+        }
+        &:checked + label svg #heart-path {
+          // SVG animation on check
+          animation: wishlist-heart-add 300ms forwards;
+          stroke: $heart-color;
+        }
+        & + label svg #heart-path {
+          // Transition the fill
+          transition: fill 200ms;
+        }
+        & + label:hover svg #heart-path {
+          transition: stroke 150ms linear;
+          stroke: $heart-color;
+        }
+        & + label:before {
+          // Color Accessibility For Red Deficient
+          align-items: center;
+          background-color: #000;
+          border-radius: 3px;
+          box-sizing: border-box;
+          color: #fff;
+          content: attr(data-hover-text);
+          display: flex;
+          font-size: 0.8em;
+          height: 25px;
+          justify-content: center;
+          left: 50%;
+          line-height: 1;
+          opacity: 0;
+          padding: 0.5em;
+          position: absolute;
+          text-align: center;
+          top: -2.25em;
+          transform: translateX(-50%);
+          transition: opacity 100ms linear;
+          white-space: pre;
+        }
+        & + label:hover:before {
+          opacity: 1;
+          transition-delay: 400ms;
+        }
+      }
+      label {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+      }
+
+      @keyframes wishlist-heart-wiggle {
+        0% {
+          transform: rotate(0deg);
+        }
+        25% {
+          transform: rotate(-10deg);
+        }
+        75% {
+          transform: rotate(8deg);
+        }
+        100% {
+          transform: rotate(0deg);
+        }
+      }
+
+      @keyframes wishlist-heart-add {
+        0% {
+          stroke-width: 5;
+        }
+        50% {
+          stroke-width: 20;
+        }
+        100% {
+          fill: $heart-color;
+          stroke-width: 5;
+        }
+      }
+    }
   }
 
   .store-description {
@@ -99,6 +227,41 @@
       line-height: 180%;
       color: #525252;
     }
+
+    // Sidebar
+    .sidebar-widget {
+      margin-bottom: 20px;
+      border: 1px solid #d7d7d7;
+    }
+
+    .sidebar-widget .widget-header,
+    .sidebar-widget .widget-body {
+      padding: 15px;
+    }
+
+    .sidebar-widget .widget-body {
+      a {
+        text-decoration: none;
+        img {
+          width: 70px;
+          height: 70px;
+        }
+
+        h5 {
+          font-size: 16px;
+          font-weight: 300;
+          margin-bottom: 0;
+
+          color: #ff7158;
+        }
+
+        .price {
+          font-size: 18px;
+          font-weight: 500;
+        }
+      }
+    }
+    // End Sidebar
   }
 
   .store-recomended-product {

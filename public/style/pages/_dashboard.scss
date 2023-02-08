@@ -172,5 +172,73 @@
         right: 0;
       }
     }
+
+    // All Review Style
+
+    #review_form_wrapper #review_form {
+      display: inline-block;
+      width: 100%;
+    }
+    #review_form_wrapper #review_form .comment-form p > label {
+      display: block;
+      font-size: 14px;
+      color: #666666;
+      font-weight: 400;
+    }
+
+    #review_form_wrapper #review_form .comment-form p input[type='text'],
+    #review_form_wrapper #review_form .comment-form p input[type='email'] {
+      display: block;
+      width: 100%;
+      border: 1px solid #e6e6e6;
+      outline: none;
+      height: 39px;
+      padding: 2px 10px;
+      margin-bottom: 17px;
+    }
+    .wrap-product-detail .comment-form-rating > span {
+      font-size: 14px;
+      line-height: 20px;
+      display: block;
+      float: left;
+      margin-right: 7px;
+      color: #666;
+    }
+    .wrap-product-detail .comment-form-rating ~ p {
+      margin-bottom: 0 !important;
+    }
+    .wrap-product-detail .comment-form-rating p.stars {
+      display: inline-block;
+      margin-bottom: 0 !important;
+    }
+    .comment-form-rating .stars input[type='radio'] {
+      display: none;
+    }
+    .comment-form-rating .stars label {
+      display: block;
+      float: left;
+      margin: 0;
+      padding: 0 2px;
+    }
+    .comment-form-rating .stars label::before {
+      content: '\f005';
+      font-family: FontAwesome;
+      font-size: 15px;
+      /*color: #e6e6e6;*/
+      color: #efce4a;
+    }
+    .comment-form-rating .stars input[type='radio']:checked ~ label::before {
+      color: #e6e6e6;
+    }
+    .comment-form-rating .stars:hover label::before {
+      color: #efce4a !important;
+    }
+    .comment-form-rating .stars label:hover ~ label::before {
+      color: #e6e6e6 !important;
+    }
+    .comment-form-rating {
+      margin-bottom: 15px;
+    }
+    // End All Review Style
   }
 }

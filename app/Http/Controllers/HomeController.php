@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductComment;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -19,9 +23,33 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         //Relasikan dahulu dengan galleries untuk mengambil gambarnya
-        $products = Product::with(['galleries'])->latest()->paginate(32)->withQueryString();
+        $products = Product::with(['galleries'])->latest()->paginate(16);
+
+        $popularProducts = Product::with(['galleries'])
+            ->join('transaction_details', 'products.id', '=', 'transaction_details.products_id')
+            ->selectRaw('products.*, sum(transaction_details.quantity) as total_purchases')
+            ->groupBy('products.id')
+            ->orderBy('total_purchases', 'desc')
+            ->limit(12)
+            ->get();
+
+
+        // Cek semua products_id yang ada pada $transaction, jika sama gabungkan lalu jumlahkan berdasrkan quantitynya
+        $totalBuying = TransactionDetail::where('shipping_status', 'SUCCESS')
+            ->select('products_id', DB::raw('SUM(quantity) as total_quantity'))
+            ->groupBy('products_id')
+            ->get();
+
+        // Ambil rating dari productComment 
+        $rating = ProductComment::select('products_id', DB::raw('AVG(rating) as total_rating'))
+            ->groupBy('products_id')
+            ->get();
+        // dd($rating);
 
         return view('pages.home', [
+            'popularProducts' => $popularProducts,
+            'rating' => $rating,
+            'totalBuying' => $totalBuying,
             'categories' => $categories,
             'products' => $products
         ]);

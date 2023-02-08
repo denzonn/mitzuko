@@ -7,7 +7,7 @@
 
 
 @section('content')
-    <div class="section-content section-dashboard-home" data-aos="fade-up">
+    <div class="section-content section-dashboard-home mb-5" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
                 <h2 class="dashboard-title">Product</h2>
@@ -28,13 +28,13 @@
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
-                                        <a href="{{ route('product.create') }}" class="btn  mb-3"
+                                    <div class="col-12 col-xl-9 col-md-9">
+                                        <a href="{{ route('product.create') }}" class="btn mb-3"
                                             style="background: #f74d2e; color: white">
                                             + Tambah Product Baru
                                         </a>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-12 col-lg-3 col-md-3">
                                         <form action="/admin/product/search" method="get" enctype="multipart/form-data">
                                             <div class="search-bar">
                                                 <input type="text" placeholder="Search" class="wide" name="search"

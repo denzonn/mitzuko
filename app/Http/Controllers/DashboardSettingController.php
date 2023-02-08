@@ -19,9 +19,25 @@ class DashboardSettingController extends Controller
     {
         $data = $request->all();
 
-        $item = Auth::user();
+        // Ubah path dari photo
+        // $data['photo'] = $request->file('photo')->store(
+        //     'assets/user',
+        //     'public'
+        // );
+        if ($request->hasFile('photo')) {
+            $images = $request->file('photo');
 
-        $item->update($data);
+            $extension = $images->getClientOriginalExtension();
+
+            $random = \Str::random(10);
+            $file_name = "profil" . $random . "." . $extension;
+
+            $images->storeAs('public/assets/users', $file_name);
+            $data['photo'] = 'public/assets/users' . '/' . $file_name;
+        }
+
+        $item = Auth::user();
+        $users = $item->update($data);
 
         return redirect()->route('dashboard-settings-account');
     }

@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Models\VariantType;
 use Exception;
 use Illuminate\Http\Client\Events\ResponseReceived;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class CheckoutController extends Controller
 {
     public function process(Request $request)
     {
+        // dd($request->all());
         // Save User Data
         $user = Auth::user();
         $user->update($request->except('total_price'));
@@ -39,7 +41,7 @@ class CheckoutController extends Controller
             ->where('users_id', Auth::user()->id)
             ->get();
 
-        //Transaction Create
+        // Transaction Create
         $transactions = Transaction::create([
             'users_id' => Auth::user()->id,
             'code' => $code,
@@ -49,6 +51,11 @@ class CheckoutController extends Controller
             'shipping_status' => 'PENDING',
         ]);
 
+        $variantTypeIds = [];
+        foreach ($carts as $cart) {
+            $variantTypeIds[] = $cart->variant_type_id;
+        }
+        $variantData = VariantType::whereIn('id', $variantTypeIds)->get();
 
         //Transaction Detail Create
         foreach ($carts as $cart) {
@@ -60,14 +67,21 @@ class CheckoutController extends Controller
                 'code' => $trx,
                 'transactions_id' => $transactions->id,
                 'products_id' => $cart->product->id,
+                'variant_type_id' => $cart->variant_type_id,
                 'price' => $cart->product->price,
                 'quantity' => $quantity,
                 'resi' => '',
                 'shipping_status' => 'PENDING',
             ]);
 
-            // Update Stock Product
-            $cart->product->decrement('stock', $quantity);
+            // Update Stock Product, Jika dia dari variant maka update stock variant
+            foreach ($variantData as $item) {
+                if ($item->id == $cart->variant_type_id) {
+                    $item->decrement('stock', $quantity);
+                } else {
+                    $cart->product->decrement('stock', $quantity);
+                }
+            }
         }
 
         //Delete Cart Data
@@ -114,10 +128,7 @@ class CheckoutController extends Controller
         $transactions->save();
 
         // Redirect ke dashboard dan kirimkan snap token
-        return view('pages.checkout', [
-            'snapToken' => $snapToken,
-            'transactions' => $transactions,
-        ]);
+        return redirect()->route('dashboard-transaction');
     }
 
     public function payment($id)

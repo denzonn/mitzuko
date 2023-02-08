@@ -79,7 +79,15 @@
                                                         <div class="col-12">
                                                             <div class="col-12 text-muted subtitle-dashboard"
                                                                 style="font-size: 15px">
-                                                                by {{ $detail->product->brand }}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-12  subtitle-dashboard" style="font-size: 15px">
                                                                 Quantity : {{ $detail->quantity }}

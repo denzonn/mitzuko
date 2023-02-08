@@ -29,6 +29,7 @@ class User extends Authenticatable
         'regencies_id',
         'zip_code',
         'country',
+        'photo',
     ];
 
     /**
@@ -58,5 +59,15 @@ class User extends Authenticatable
     public function regencies()
     {
         return $this->belongsTo(Regency::class, 'regencies_id', 'id');
+    }
+
+    public function productComment()
+    {
+        return $this->hasMany(ProductComment::class, 'users_id', 'id');
+    }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class, 'users_id', 'id');
     }
 }

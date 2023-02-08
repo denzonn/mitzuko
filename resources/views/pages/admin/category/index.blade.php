@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="section-content section-dashboard-home" data-aos="fade-up">
+    <div class="section-content section-dashboard-home mb-5" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
                 <h2 class="dashboard-title">Category</h2>
@@ -25,7 +25,8 @@
                         @endif
                         <div class="card">
                             <div class="card-body">
-                                <a href="{{ route('category.create') }}" class="btn btn-primary mb-3">
+                                <a href="{{ route('category.create') }}" class="btn mb-3"
+                                    style="background: #f74d2e; color: white; outline: #f74d2e">
                                     + Tambah Category Baru</a>
                                 <div class="row mt-4">
                                     @foreach ($categories as $category)

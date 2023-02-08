@@ -6,7 +6,7 @@
 
 @section('content')
     <!-- Page Content -->
-    <div class="section-content section-dashboard-home" data-aos="fade-up">
+    <div class="section-content section-dashboard-home mb-5" data-aos="fade-up">
         <div class="container-fluid">
             <div class="dashboard-heading">
                 <h2 class="dashboard-title">Transactions</h2>
@@ -62,8 +62,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 ">
+                                                            <div class="col-9 col-md-5 " style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted ">
                                                                 by {{ $transaction->user->name }}
@@ -116,12 +126,22 @@
                                                     href="{{ route('admin-dashboard-transaction-details', $detail->transaction->id) }}">
                                                     <div class="card-body">
                                                         <div class="row">
-                                                            <div class="col-3 col-md-1">
+                                                            <div class="col-3 col-md-1" style="line-height: 30px">
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
                                                             <div class="col-9 col-md-5 pl-0">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $transaction->user->name }}
@@ -178,8 +198,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 pl-0">
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $transaction->user->name }}
@@ -245,8 +275,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 pl-0">
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $transaction->user->name }}
@@ -303,8 +343,18 @@
                                                                 <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
                                                                     alt="" style="width: 70px; height: auto" />
                                                             </div>
-                                                            <div class="col-9 col-md-5 pl-0">
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
                                                                 {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
                                                             </div>
                                                             <div class="col-3 col-md-2 text-muted">
                                                                 by {{ $transaction->user->name }}
