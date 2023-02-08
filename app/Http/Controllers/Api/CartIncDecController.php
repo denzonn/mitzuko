@@ -8,23 +8,43 @@ use Illuminate\Http\Request;
 
 class CartIncDecController extends Controller
 {
-    public function cartIncrement(Request $request)
+    // public function cartIncrement(Request $request)
+    // {
+    //     $cart = Cart::find($request->cart_id);
+    //     $cart->increment('quantity');
+    //     return response()->json([
+    //         'success' => true,
+    //         'data'    => $cart
+    //     ]);
+    // }
+
+    // public function cartDecrement(Request $request)
+    // {
+    //     $cart = Cart::find($request->cart_id);
+    //     $cart->decrement('quantity');
+    //     return response()->json([
+    //         'success' => true,
+    //         'data'    => $cart,
+    //     ]);
+    // }
+
+    public function incrementQuantity(Request $request)
     {
-        $cart = Cart::find($request->cart_id);
+        $cart = Cart::where('id', $request->cart_id)->first();
         $cart->increment('quantity');
         return response()->json([
-            'success' => true,
-            'data'    => $cart
+            'success' => 'Quantity Increment',
+            'quantity' => $cart->quantity,
         ]);
     }
 
-    public function cartDecrement(Request $request)
+    public function decrementQuantity(Request $request)
     {
-        $cart = Cart::find($request->cart_id);
+        $cart = Cart::where('id', $request->cart_id)->first();
         $cart->decrement('quantity');
         return response()->json([
-            'success' => true,
-            'data'    => $cart,
+            'success' => 'Quantity Decrement',
+            'quantity' => $cart->quantity,
         ]);
     }
 }

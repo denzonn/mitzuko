@@ -10,12 +10,98 @@
       @media only screen and (min-width: 992px) {
         margin-right: 10px;
         margin-left: 10px;
+        width: max-content;
+      }
+
+      &:hover .cart-show {
+        visibility: visible;
+        opacity: 1;
+        background: #ffffff;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .cart-show {
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        top: 65px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: 380px;
+        right: 25vh;
+        background: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 14px 3px rgba(190, 190, 190, 0.86);
+        transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+        -webkit-transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+        img {
+          border: 1px solid #e5e5e5;
+          width: 50px;
+          height: 50px;
+        }
+
+        .another {
+          font-size: 12px;
+          font-style: italic;
+          transition: all 0.3s ease-in-out;
+
+          a {
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            color: #d5d5d5;
+
+            &:hover {
+              transform: translateY(-5px);
+              color: #b5b5b5;
+            }
+          }
+        }
+      }
+    }
+
+    .search-bar {
+      height: 40px;
+      display: flex;
+      width: 100%;
+      max-width: 400px;
+      padding-left: 16px;
+      border-radius: 4px;
+      input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: var(--search-bg);
+        border-radius: 4px;
+        font-family: var(--body-font);
+        font-size: 15px;
+        font-weight: 500;
+        padding: 0 20px 0 40px;
+        box-shadow: 0 0 0 2px rgb(134 140 160 / 2%);
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56.966 56.966' fill='%23717790c7'%3e%3cpath d='M55.146 51.887L41.588 37.786A22.926 22.926 0 0046.984 23c0-12.682-10.318-23-23-23s-23 10.318-23 23 10.318 23 23 23c4.761 0 9.298-1.436 13.177-4.162l13.661 14.208c.571.593 1.339.92 2.162.92.779 0 1.518-.297 2.079-.837a3.004 3.004 0 00.083-4.242zM23.984 6c9.374 0 17 7.626 17 17s-7.626 17-17 17-17-7.626-17-17 7.626-17 17-17z'/%3e%3c/svg%3e");
+        background-size: 14px;
+        background-repeat: no-repeat;
+        background-position: 16px 48%;
+        color: var(--theme-color);
+        &::placeholder {
+          font-family: var(--body-font);
+          color: var(--inactive-color);
+          font-size: 15px;
+          font-weight: 500;
+        }
       }
     }
   }
 
   .profile-picture {
-    max-height: 45px;
+    // Isinya menyesuaikan ukuran width dan height
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border: 1px solid #e5e5e5;
   }
 
   .cart-badge {
@@ -28,6 +114,18 @@
     background: #29a867;
     color: #fefefe;
     margin-left: -10px;
+  }
+  .cart-badge-wishlist {
+    display: inline-block;
+    min-width: 2em; /* em unit */
+    padding: 0.3em; /* em unit */
+    border-radius: 50%;
+    font-size: 10px;
+    text-align: center;
+    background: #ff7158;
+    color: #fefefe;
+    margin-left: -10px;
+    margin-right: -10px;
   }
 }
 .navbar-fixed-top.scrolled {

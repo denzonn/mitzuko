@@ -10,7 +10,7 @@ class TransactionDetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'code', 'products_id', 'transactions_id', 'price', 'resi', 'shipping_status'
+        'code', 'products_id', 'variant_type_id', 'transactions_id', 'price', 'quantity', 'resi', 'shipping_status'
     ];
 
     protected $hidden = [];
@@ -23,5 +23,10 @@ class TransactionDetail extends Model
     public function transaction()
     {
         return $this->hasOne(Transaction::class, 'id', 'transactions_id');
+    }
+
+    public function variant_type()
+    {
+        return $this->hasOne(VariantType::class, 'id', 'variant_type_id');
     }
 }

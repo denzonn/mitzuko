@@ -21,4 +21,9 @@ class ProductGallery extends Model
     {
         return $this->belongsTo(Product::class, 'products_id', 'id');
     }
+
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class, 'products_id', 'id');
+    }
 }

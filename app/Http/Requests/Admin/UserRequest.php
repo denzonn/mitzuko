@@ -24,9 +24,10 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|unique:users',
             'email' => 'required|email|unique:users',
             'roles' => 'nullable|string|in:ADMIN,USER',
+            'photo' => 'nullable|image|max:2048|types:jpg,jpeg,png',
         ];
     }
 }
