@@ -56,8 +56,11 @@ class CategoryController extends Controller
             $random = \Str::random(10);
             $file_name = "category" . $random . "." . $extension;
 
-            $images->storeAs('public/assets/category', $file_name);
-            $data['photo'] = 'public/assets/category' . '/' . $file_name;
+            // $images->storeAs('public/assets/category', $file_name);
+
+            $data['photo'] = $images->storeAs('assets/category', $file_name, 'public');
+
+            // $data['photo'] = $request->file('photo')->store('assets/category', 'public');
         }
 
         $category = Category::create($data);

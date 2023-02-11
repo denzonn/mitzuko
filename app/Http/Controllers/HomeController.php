@@ -23,7 +23,8 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         //Relasikan dahulu dengan galleries untuk mengambil gambarnya
-        $products = Product::with(['galleries'])->latest()->paginate(16);
+        $products = Product::with(['galleries'])->latest()->paginate(4);
+
 
         $popularProducts = Product::with(['galleries'])
             ->join('transaction_details', 'products.id', '=', 'transaction_details.products_id')

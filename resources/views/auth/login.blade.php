@@ -1,5 +1,6 @@
 @extends('layouts.auth')
 
+
 @section('content')
     <div class="page-content page-auth">
         <div class="section-store-auth mt-4" data-aos="fade-up">
@@ -48,3 +49,41 @@
         </div>
     </div>
 @endsection
+
+@push('addon-script')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+        integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var form = $(this);
+
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                data: new FormData(form[0]),
+                contentType: false,
+                processData: false,
+                success: function() {
+                    Swal.fire({
+                        title: 'Berhasil!',
+                        text: 'Login Berhasil',
+                        icon: 'success',
+                    });
+                    setTimeout(() => {
+                        window.location.href = "{{ route('home') }}";
+                    }, 2000); // 2000 ms = 2 detik
+                },
+                error: function(xhr) {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: xhr.responseJSON.message,
+                        icon: 'error',
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

@@ -72,54 +72,47 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Variant</label>
-                                                <select name="variant_product_id" class="form-control">
-                                                    @if ($product->variant_product_id == 0 || $product->variant_product_id == null)
+                                        @if ($product->variant_product_id == 0 || $product->variant_product_id == null)
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Variant</label>
+                                                    <select name="variant_product_id" class="form-control">
                                                         <option value="0">Tidak Ada Variant</option>
-                                                    @else
-                                                        <option value="{{ $product->variant_product_id }}">
-                                                            {{ $product->variantProduct->name }}
-                                                        </option>
-                                                        <option value="0">Tidak Ada Variant</option>
-                                                    @endif
-                                                    @foreach ($variantProduct as $item)
-                                                        @if ($item->id != $product->variant_product_id)
-                                                            <option value="{{ $item->id }}">
-                                                                {{ $item->name }}
-                                                            </option>
-                                                        @endif
-                                                    @endforeach
-                                                </select>
+                                                        @foreach ($variantProduct as $item)
+                                                            @if ($item->id != $product->variant_product_id)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <div class="variant-option">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <label>Variant</label>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="variant-option">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <label>Variant</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="variant-container col-12 px-0">
-                                                            @foreach ($variantType as $item)
+                                                        <div class="row">
+                                                            <div class="variant-container col-12 px-0">
                                                                 <div class="variant-group px-0 d-flex mb-3">
                                                                     <div class="col-3">
                                                                         <input type="text" name="variant_name[]"
-                                                                            class="form-control" placeholder="Nama Variant"
-                                                                            value="{{ $item->name }}" />
+                                                                            class="form-control"
+                                                                            placeholder="Nama Variant" />
                                                                     </div>
                                                                     <div class="col-3">
                                                                         <input type="number" name="variant_price[]"
-                                                                            class="form-control" placeholder="Harga Variant"
-                                                                            value="{{ $item->price }}" />
+                                                                            class="form-control"
+                                                                            placeholder="Harga Variant" />
                                                                     </div>
                                                                     <div class="col-3">
                                                                         <input type="number" name="variant_stock[]"
-                                                                            class="form-control" placeholder="Stock Variant"
-                                                                            value="{{ $item->stock }}" />
+                                                                            class="form-control"
+                                                                            placeholder="Stock Variant" />
                                                                     </div>
                                                                     <div class="col-3">
                                                                         <button type="button"
@@ -128,18 +121,87 @@
                                                                         </button>
                                                                     </div>
                                                                 </div>
-                                                            @endforeach
-                                                        </div>
-                                                        <div class="col-6">
-                                                            <button type="button"
-                                                                class="btn btn-success add-variant">Tambah
-                                                                Variant
-                                                            </button>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <button type="button"
+                                                                    class="btn btn-success add-variant">Tambah
+                                                                    Variant
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @else
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Variant</label>
+                                                    <select name="variant_product_id" class="form-control">
+                                                        <option value="{{ $product->variant_product_id }}">
+                                                            {{ $product->variantProduct->name }}
+                                                        </option>
+                                                        @foreach ($variantProduct as $item)
+                                                            @if ($item->id != $product->variant_product_id)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="variant-option">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <label>Variant</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="variant-container col-12 px-0">
+                                                                @forelse ($variantType as $item)
+                                                                    <div class="variant-group px-0 d-flex mb-3">
+                                                                        <div class="col-3">
+                                                                            <input type="text" name="variant_name[]"
+                                                                                class="form-control"
+                                                                                placeholder="Nama Variant"
+                                                                                value="{{ $item->name }}" />
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="number" name="variant_price[]"
+                                                                                class="form-control"
+                                                                                placeholder="Harga Variant"
+                                                                                value="{{ $item->price }}" />
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <input type="number" name="variant_stock[]"
+                                                                                class="form-control"
+                                                                                placeholder="Stock Variant"
+                                                                                value="{{ $item->stock }}" />
+                                                                        </div>
+                                                                        <div class="col-3">
+                                                                            <button type="button"
+                                                                                class="btn btn-danger remove-variant">
+                                                                                Hapus
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <button type="button"
+                                                                    class="btn btn-success add-variant">Tambah
+                                                                    Variant
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Description</label>

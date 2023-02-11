@@ -143,7 +143,7 @@
                     @endforelse
                 </div>
                 <div id="pagination">
-                    {{ $products->links() }}
+                    @include('layouts.pagination', ['paginator' => $products])
                 </div>
             </div>
         </section>

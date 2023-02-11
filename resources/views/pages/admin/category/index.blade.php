@@ -34,8 +34,7 @@
                                             <a href="{{ route('category.edit', $category->id) }}"
                                                 class="card-dashboard-product d-block" style="text-decoration: none">
                                                 <div class="card card-body mb-3">
-                                                    <img src="{{ Storage::url($category->photo ?? '') }}" alt=""
-                                                        class="w-100 mb-2 product-photo" />
+                                                    <img src="{{ Storage::url($category->photo) }}" class="w-100 mb-2" />
                                                     <div class="product-title text-center">{{ $category->name }}</div>
                                                 </div>
                                                 <a href="{{ route('admin-dashboard-category-delete', $category->id) }}"

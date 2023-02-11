@@ -370,6 +370,7 @@ footer p {
 .page-details .store-description .sidebar-widget {
   margin-bottom: 20px;
   border: 1px solid #d7d7d7;
+  border-radius: 5px;
 }
 .page-details .store-description .sidebar-widget .widget-header,
 .page-details .store-description .sidebar-widget .widget-body {
@@ -1346,7 +1347,7 @@ ul {
   color: #000000;
 }
 .store-popular-products .component-product-popular .product-popular-price {
-  font-size: 14px;
+  font-size: 30px;
   color: #fc4f31;
   font-weight: 600;
 }

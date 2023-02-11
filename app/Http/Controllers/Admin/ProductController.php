@@ -21,7 +21,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['galleries', 'category'])->get();
+        $products = Product::with(['galleries', 'category'])
+            ->orderBy('created_at', 'DESC')
+            ->get();
         return view('pages.admin.product.index', [
             'products' => $products
         ]);
@@ -134,10 +136,12 @@ class ProductController extends Controller
 
             $random = \Str::random(10);
             $file_name = "product-gallery" . $random . "." . $extension;
+
+            $data['photo'] = $images->storeAs('assets/product-gallery', $file_name, 'public');
         }
         $gallery = [
             'products_id' => $product->id,
-            'photos' => $request->file('photo')->storeAs('public/assets/product-gallery', $file_name)
+            'photos' =>  $data['photo']
         ];
         ProductGallery::create($gallery);
 
