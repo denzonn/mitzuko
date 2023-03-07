@@ -55,4 +55,19 @@
       }
     }
   }
+
+  .btn-variant {
+    border: 1px solid #d7d7d7;
+    box-shadow: none;
+
+    &:hover {
+      border: 1px solid #ff7158;
+      box-shadow: 0 0 2px 0 #ff7158;
+    }
+
+    &.clicked {
+      border: 1px solid #ff7158;
+      box-shadow: 0 0 2px 0 #ff7158;
+    }
+  }
 }

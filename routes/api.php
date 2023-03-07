@@ -32,3 +32,7 @@ Route::get('default/{id}', [App\Http\Controllers\Api\LocationController::class, 
 
 Route::get('purchases/month', [App\Http\Controllers\Api\PurchasesController::class, 'getMonthPurchases'])->name('api-purchases-month');
 Route::get('top/product', [App\Http\Controllers\Api\PurchasesController::class, 'topProduct'])->name('api-top-product');
+
+// Chat
+Route::post('chat', [App\Http\Controllers\Api\ChatController::class, 'index']);
+Route::get('chat/{message_code}', [App\Http\Controllers\Api\ChatController::class, 'userChat']);

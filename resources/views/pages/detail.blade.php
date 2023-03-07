@@ -202,7 +202,7 @@
                                 {!! $product->description !!}
                             </p>
                         </div>
-                        <div class="col-lg-4 d-lg-inline d-md-none">
+                        <div class="col-lg-4 d-lg-inline d-md-none d-sm-none">
                             <!-- Product sidebar Widget -->
                             <div class="sidebar-widget">
                                 <div class="widget-header">

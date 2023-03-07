@@ -7,9 +7,9 @@
                 <div class="row align-item-center justify-content-center row-login">
                     <div class="col-lg-4">
                         <h2>
-                            Memulai untuk jual beli
+                            Memulai untuk membeli
                             <br />
-                            dengan cara terbaru
+                            dengan mendaftarkan diri anda
                         </h2>
                         <form method="POST" action="{{ route('register') }}">
                             @csrf

@@ -128,71 +128,78 @@
                         <hr />
                     </div>
                     <div class="col-12">
-                        <h2 class="mb-4">Shipping Details</h2>
+                        {{-- Font awesome lokasi --}}
+                        <h2 class="mb-4">
+                            <i class="fa-sharp fa-solid fa-location-dot" style="color: #ff7158"></i> Alamat Pengiriman
+                        </h2>
                     </div>
                 </div>
                 <form action="{{ route('checkout') }}" enctype="multipart/form-data" method="get" id="checkout">
                     @csrf
                     <input type="hidden" name="id[]" value="">
                     <input type="hidden" id="total_price" name="total_price" class="total" value="">
+                    <input type="hidden" id="address_one" name="address_one" value="{{ $users->address_one }}">
+                    <input type="hidden" name="address_two" value="{{ $users->address_two }}">
+                    <input type="hidden" name="provinces_id" value="{{ $users->provinces_id }}">
+                    <input type="hidden" name="regencies_id" value="{{ $users->regencies_id }}">
+                    <input type="hidden" name="zip_code" value="{{ $users->zip_code }}">
+                    <input type="hidden" name="country" value="{{ $users->country }}">
+                    <input type="hidden" name="phone_number" value="{{ $users->phone_number }}">
+                    <input type="hidden" id="payment" name="payment" value="">
                     <!-- Form -->
-                    <div class="row mb-2" data-aos="fade-up" data-aos-delay="200">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="address_one">Address 1</label>
-                                <input type="text" class="form-control" id="address_one" name="address_one"
-                                    value="{{ Auth::user()->address_one }}" placeholder="Address 1" required />
+                    @if (
+                        $users->address_one == null ||
+                            $users->address_two == null ||
+                            $users->provinces_id == null ||
+                            $users->regencies_id == null ||
+                            $users->zip_code == null ||
+                            $users->country == null ||
+                            $users->phone_number == null)
+                        <div class="col-12 px-0" data-aos="fade-up">
+                            <a href="{{ route('dashboard-settings-account') }}"
+                                style="text-decoration: none; color: #ff7158">Lengkapi Alamat</a>
+                        </div>
+                    @else
+                        <div class="row" data-aos="fade-up">
+                            <div class="col-12">
+                                <div class="col-12 subtitle-dashboard px-0" style="font-size: 15px">
+                                    {{ $users->name }}
+                                </div>
+                                <div class="col-12 text-muted subtitle-dashboard px-0" style="font-size: 15px">
+                                    {{ $users->email }} | {{ $users->phone_number }}
+                                </div>
+                                <div class="col-12 text-muted subtitle-dashboard px-0" style="font-size: 15px">
+                                    Jl. {{ $users->address_one ?? '' }},
+                                    {{ $users->address_two ?? '' }},
+                                    {{ $users->provinces->name ?? '' }},
+                                    {{ $users->regencies->name ?? '' }},
+                                    {{ $users->country ?? '' }},
+                                    {{ $users->zip_code ?? '' }}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="address_two">Address 2</label>
-                                <input type="text" class="form-control" id="address_two" name="address_two"
-                                    value="{{ Auth::user()->address_two }}" placeholder="Address 2" required />
-                            </div>
+                    @endif
+                    <div class="row" data-aos="fade-up" data-aos-delay="150">
+                        <div class="col-12">
+                            <hr />
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="provinces_id">Province</label>
-                                <select name="provinces_id" id="provinces_id" class="form-control"
-                                    v-model="provinces_id" v-if="provinces">
-                                    <option v-for="province in provinces" :value="province.id">@{{ province.name }}
-                                    </option>
-                                </select>
-                                <select v-else class="form-control"></select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="regencies_id">City</label>
-                                <select name="regencies_id" id="regencies_id" class="form-control"
-                                    v-model="regencies_id" v-if="regencies">
-                                    <option v-for="regency in regencies" :value="regency.id">@{{ regency.name }}
-                                    </option>
-                                </select>
-                                <select v-else class="form-control"></select>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="zip_code">Postal</label>
-                                <input type="text" class="form-control" id="zip_code" name="zip_code"
-                                    placeholder="00000" value="{{ Auth::user()->zip_code }}" />
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="country">Country</label>
-                                <input type="text" class="form-control" id="country" name="country"
-                                    placeholder="Indonesia" value="{{ Auth::user()->country }}" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="phone_number">Phone Number</label>
-                                <input type="number" class="form-control" id="phone_number" name="phone_number"
-                                    placeholder="0800000000000" value="{{ Auth::user()->phone_number }}" />
+                        <div class="col-12">
+                            <div class="row align-items-center">
+                                <div class="col-12 col-lg-2 col-md-2">
+                                    <h2 class="mb-2">Metode Pembayaran</h2>
+                                </div>
+                                <div class="col-4 col-lg-2 col-md-2">
+                                    <button type="button" class="btn btn-variant" value="cod"
+                                        onclick="selectPaymentMethod(this)">
+                                        Cash On Delivery
+                                    </button>
+                                </div>
+                                <div class="col-4 col-lg-2 col-md-2">
+                                    <button type="button" class="btn btn-variant" value="online"
+                                        onclick="selectPaymentMethod(this)">
+                                        Pembayaran Online
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -220,10 +227,24 @@
                             <div class="product-subtitle">Total</div>
                         </div>
                         <div class="col-12 col-lg-3 col-md-3">
-                            <button type="button" id="checkbox" class="btn btn-success mt-3 px-4 btn-block"
-                                onclick="checkout()">
-                                Checkout Now
-                            </button>
+                            @if (
+                                $users->address_one == null ||
+                                    $users->address_two == null ||
+                                    $users->provinces_id == null ||
+                                    $users->regencies_id == null ||
+                                    $users->zip_code == null ||
+                                    $users->country == null ||
+                                    $users->phone_number == null)
+                                <button type="button" id="checkbox" class="btn btn-success mt-3 px-4 btn-block"
+                                    disabled>
+                                    Checkout Now
+                                </button>
+                            @else
+                                <button type="button" id="checkbox" class="btn btn-success mt-3 px-4 btn-block"
+                                    onclick="checkout()">
+                                    Checkout Now
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </form>
@@ -241,7 +262,6 @@
 
     <script>
         function updateChecked() {
-
             let checkboxes = document.querySelectorAll('input[type="checkbox"]');
             let checkedValues = [];
 
@@ -268,7 +288,7 @@
                     }));
                     let total_price = document.getElementById("total_price");
                     total_price.value = totalPrice;
-                    console.log(totalPrice);
+                    // console.log(totalPrice);
                 },
                 error: function(response) {
                     console.log(response);
@@ -276,7 +296,23 @@
             });
         }
 
+        let selectedPaymentMethod = null;
+
+        function selectPaymentMethod(button) {
+            $('.btn-variant').click(function() {
+                $('.btn-variant').removeClass('clicked');
+                $(this).toggleClass('clicked');
+            });
+
+            selectedPaymentMethod = button.value;
+            console.log(selectedPaymentMethod);
+
+            let payment = document.getElementById("payment");
+            payment.value = selectedPaymentMethod;
+        }
+
         function checkout() {
+            // Ambil semua checkbox yang ada di halaman ini
             let checkboxes = document.querySelectorAll('input[type="checkbox"]');
             let checkedValues = [];
 
@@ -286,22 +322,63 @@
                 }
             }
 
-            // Cek apakah ada yang dichecklist klau tidak ada maka akan muncul alert
-            if (checkedValues.length == 0) {
+            // Cek apakah ada yang dichecklist, jika tidak maka munculkan alert
+            if (checkedValues.length === 0) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Please select product to checkout!',
                 })
+                return; // hentikan program jika tidak ada produk yang dipilih
+            }
+            // Cek apakah metode pembayaran telah dipilih
+            if (selectedPaymentMethod === null) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please select payment method!',
+                })
+                return; // hentikan program jika metode pembayaran tidak dipilih
+            }
+
+            //Jika payment methodnya cod maka kirim pesan ke chat
+            if (selectedPaymentMethod === 'cod') {
+
+                let users_id_roles = '{{ Auth::user()->id }}, {{ Auth::user()->roles }}';
+                $.ajax({
+                    url: '/api/chat',
+                    method: 'post',
+                    data: {
+                        message: 'Saya ingin melakukan pembayaran dengan metode COD',
+                        users_id_roles: users_id_roles,
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        // Submit form setelah pesan chat terkirim
+                        document.getElementById("checkout").submit();
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Checkout Berhasil! Silahkan Lakukan Pembayaran',
+                            icon: 'success',
+                        });
+                    },
+                    error: function(response) {
+                        console.log(response);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Failed to send chat message!',
+                        });
+                    }
+                });
             } else {
-                // Jika ada submit form
+                // Jika bukan metode pembayaran COD, langsung submit form dan tampilkan pesan
                 document.getElementById("checkout").submit();
                 Swal.fire({
                     title: 'Berhasil!',
                     text: 'Checkout Berhasil! Silahkan Lakukan Pembayaran',
                     icon: 'success',
                 });
-                setTimeout(() => {}, 3000);
             }
         }
     </script>
@@ -329,7 +406,7 @@
                             console.log(response.data);
                             self.provinces_id = response.data.provinces.id;
                             self.regencies_id = response.data.regencies.id;
-                            console.log(self.regencies_id);
+                            // console.log(self.regencies_id);
                         })
                 },
                 getProvincesData() {

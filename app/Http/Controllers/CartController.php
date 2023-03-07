@@ -27,7 +27,10 @@ class CartController extends Controller
         $variantData = VariantType::whereIn('id', $variantTypeIds)->get();
         // dd($variantData);
 
+        $users = Auth::user();
+
         return view('pages.cart', [
+            'users' => $users,
             'variantData' => $variantData,
             'carts' => $carts,
         ]);

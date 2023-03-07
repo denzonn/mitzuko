@@ -70,4 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wishlist::class, 'users_id', 'id');
     }
+
+    public function chat()
+    {
+        return $this->hasMany(Chat::class, 'users_id', 'id');
+    }
 }

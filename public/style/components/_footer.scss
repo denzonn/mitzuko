@@ -14,7 +14,7 @@ ul {
   padding-right: 0;
 }
 .single-cta i {
-  color: #ff5e14;
+  color: #ff0000;
   font-size: 25px;
   float: left;
   margin-top: 8px;
@@ -81,13 +81,13 @@ ul {
   }
 }
 .footer-widget-heading h3::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: -15px;
   height: 2px;
   width: 50px;
-  background: #ff5e14;
+  background: #ff0000;
 }
 .footer-widget ul li {
   display: inline-block;
@@ -96,7 +96,7 @@ ul {
   margin-bottom: 12px;
 }
 .footer-widget ul li a:hover {
-  color: #ff5e14;
+  color: #ff0000;
 }
 .footer-widget ul li a {
   color: #878787;
@@ -116,9 +116,9 @@ ul {
 .subscribe-form button {
   position: absolute;
   right: 0;
-  background: #ff5e14;
+  background: #ff0000;
   padding: 13px 20px;
-  border: 1px solid #ff5e14;
+  border: 1px solid #ff0000;
   top: 0;
 }
 .subscribe-form button i {
@@ -136,16 +136,26 @@ ul {
   color: #878787;
 }
 .copyright-text p a {
-  color: #ff5e14;
+  color: #ff0000;
 }
 .footer-menu li {
   display: inline-block;
   margin-left: 20px;
 }
 .footer-menu li:hover a {
-  color: #ff5e14;
+  color: #ff0000;
 }
 .footer-menu li a {
   font-size: 14px;
   color: #878787;
+}
+
+.klik-here {
+  font-size: 11px;
+  color: #bababa;
+
+  &:hover {
+    text-decoration: none;
+    color: #ff0000;
+  }
 }

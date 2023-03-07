@@ -92,10 +92,12 @@
 
                 <!--  Content -->
                 @yield('content')
-
             </div>
         </div>
     </div>
+
+    {{-- Chat --}}
+    @include('includes.chat')
 
     <!-- Bootstrap core JavaScript -->
     @stack('prepend-script')

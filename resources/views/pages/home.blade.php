@@ -28,13 +28,16 @@
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="/images/carousel1.png" alt="Carousel Image" class="d-block w-100" />
+                                    <img src="/images/carousel1.jpg" alt="Carousel Image" class="d-block w-100"
+                                        style="max-height: 550px" />
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/images/carousel2.png" alt="Carousel Image" class="d-block w-100" />
+                                    <img src="/images/carousel2.jpg" alt="Carousel Image" class="d-block w-100"
+                                        style="max-height: 550px" />
                                 </div>
                                 <div class="carousel-item">
-                                    <img src="/images/carousel3.png" alt="Carousel Image" class="d-block w-100" />
+                                    <img src="/images/carousel3.jpg" alt="Carousel Image" class="d-block w-100"
+                                        style="max-height: 550px" />
                                 </div>
                             </div>
                         </div>
@@ -144,161 +147,6 @@
                 </div>
                 <div id="pagination">
                     @include('layouts.pagination', ['paginator' => $products])
-                </div>
-            </div>
-        </section>
-
-        {{-- Offers --}}
-        <section class="store-offers mt-4">
-            <div class="container">
-                <div class="row d-flex">
-                    <div class="col-4">
-                        <div class="offers-image" data-aos="fade-up" data-aos-delay="100">
-                            <img src="/images/iklan1.jpg" />
-                            <div class="image-caption">
-                                <h6>Smart Offer</h6>
-                                <p>Buy 1 <br> Get 1 Free</p>
-                                <button class="shopNow btn p-0" id="shopNow">
-                                    <span>Shop Now <i class="fas fa-arrow-right"></i> </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="offers-image" data-aos="fade-up" data-aos-delay="100">
-                            <img src="/images/iklan2.jpg" />
-                            <div class="image-caption">
-                                <h6>Great Category</h6>
-                                <p>Find Your <br> Favorite</p>
-                                <button class="shopNow btn p-0" id="shopNow2">
-                                    <span>Lets Find <i class="fas fa-arrow-right"></i> </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="offers-image" data-aos="fade-up" data-aos-delay="100">
-                            <img src="/images/iklan3.jpg" />
-                            <div class="image-caption">
-                                <h6>Sale Off</h6>
-                                <p>With Best <br> Discount</p>
-                                <button class="shopNow btn p-0" id="shopNow3">
-                                    <span>Buy It <i class="fas fa-arrow-right"></i> </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {{-- Popular Product --}}
-        <section class="store-popular-products mt-4" id="store-popular-products">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12" data-aos="fade-up">
-                        <h5 style="font-weight: 600"><span style="color:#ff7158">Popular</span> Products</h5>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="owl-carousel owl-theme pt-1">
-                            @php
-                                $incrementProducts = 0;
-                            @endphp
-                            @forelse ($popularProducts as $item)
-                                <div class="col-12 px-0 pt-2" data-aos="fade-up"
-                                    data-aos-delay="{{ $incrementProducts += 100 }}">
-                                    <a href="{{ route('categories-detail', $item->slug) }}"
-                                        class="component-product-popular d-block">
-                                        <div class="product-popular-image">
-                                            <img src="{{ Storage::url($item->galleries->first()->photos) }}"
-                                                alt="" class="w-100" />
-                                        </div>
-                                        <p class="product-popular-text mb-0">
-                                            {{ \Illuminate\Support\Str::limit($item->name ?? '', 32, ' ...') }}</p>
-                                        <div class="product-popular-price ">
-                                            Rp. {{ number_format($item->price, 0, ',', '.') }}
-                                        </div>
-                                        <div class="product-popular-rating">
-                                            <span>
-                                                @foreach ($rating as $rate)
-                                                    @if ($rate->products_id == $item->id)
-                                                        @for ($i = 1; $i <= 5; $i++)
-                                                            @if ($rate->total_rating >= $i)
-                                                                <i class="fas fa-star" style="color: #efce4a"></i>
-                                                            @elseif ($rate->total_rating > $i - 1 && $rate->total_rating < $i)
-                                                                <i class="fas fa-star-half-alt"
-                                                                    style="color: #efce4a"></i>
-                                                            @else
-                                                                <i class="far fa-star" style="color: #d7d7d7"></i>
-                                                            @endif
-                                                        @endfor
-                                                    @endif
-                                                @endforeach
-                                            </span>
-                                            <span
-                                                style="font-style: italic; font-weight: 200; color: #c6c6c6; font-size: 12px">
-                                                @foreach ($totalBuying as $transaction)
-                                                    @if ($transaction->products_id == $item->id)
-                                                        {{ $transaction->total_quantity }} Terjual
-                                                    @endif
-                                                @endforeach
-                                            </span>
-                                        </div>
-                                    </a>
-                                </div>
-                            @empty
-                                <div class="col-12 text-center py-5" data-aos="fade-up" data-aos-delay="100">
-                                    No Popular Products Found
-                                </div>
-                            @endforelse
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {{-- Brand Support --}}
-        <section class="store-brand-support mt-4" id="store-brand-support">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12" data-aos="fade-up">
-                        <h5 style="font-weight: 600"><span style="color:#ff7158">Brand</span> Supports</h5>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="owl-carousel owl-theme pt-1 align-items-center">
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="100">
-                                <img src="/images/brand/makeover.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="200">
-                                <img src="/images/brand/azarine.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="300">
-                                <img src="/images/brand/khaf.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="400">
-                                <img src="/images/brand/loreal.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="500">
-                                <img src="/images/brand/maybeline.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="600">
-                                <img src="/images/brand/pixy.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="700">
-                                <img src="/images/brand/safi.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="800">
-                                <img src="/images/brand/scarlet.png" alt="">
-                            </div>
-                            <div class="col-12 px-0 pt-2" data-aos="fade-up" data-aos-delay="900">
-                                <img src="/images/brand/wardah.png" alt="">
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>

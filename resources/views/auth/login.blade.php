@@ -79,7 +79,7 @@
                 error: function(xhr) {
                     Swal.fire({
                         title: 'Gagal!',
-                        text: xhr.responseJSON.message,
+                        text: 'Login Gagal',
                         icon: 'error',
                     });
                 }

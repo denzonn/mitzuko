@@ -53,6 +53,14 @@ class DashboardTransactionController extends Controller
                     ->groupBy('transactions_id', 'products_id', 'shipping_status', 'variant_type_id');
             }])->get();
 
+        $codTransactions = Transaction::where('transaction_status', 'SUCCESS')
+            ->where('payment_method', 'cod')
+            ->with(['transaction_details' => function ($query) {
+                $query->with(['product.galleries'])
+                    ->selectRaw('transactions_id, products_id, shipping_status, variant_type_id, count(*) as total_items')
+                    ->groupBy('transactions_id', 'products_id', 'shipping_status', 'variant_type_id');
+            }])->get();
+
         // $transactions = $pendingTransactions->concat($successTransactions)->concat($shippingTransactions)->concat($doneTransactions)->concat($cancelTransactions);
         // $userNames = $transactions->map(function ($transaction) {
         //     return $transaction->transaction->user->name;
@@ -74,6 +82,7 @@ class DashboardTransactionController extends Controller
 
         return view('pages.admin.dashboard-transactions', [
             'variantData' => $variantData,
+            'codTransactions' => $codTransactions,
             'pendingTransactions' => $pendingTransactions,
             'successTransactions' => $successTransactions,
             'shippingTransactions' => $shippingTransactions,

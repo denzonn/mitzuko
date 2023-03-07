@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Chat;
 use App\Models\Product;
 use App\Models\ProductComment;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -23,7 +25,7 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         //Relasikan dahulu dengan galleries untuk mengambil gambarnya
-        $products = Product::with(['galleries'])->latest()->paginate(4);
+        $products = Product::with(['galleries'])->latest()->paginate(80);
 
 
         $popularProducts = Product::with(['galleries'])
@@ -33,7 +35,6 @@ class HomeController extends Controller
             ->orderBy('total_purchases', 'desc')
             ->limit(12)
             ->get();
-
 
         // Cek semua products_id yang ada pada $transaction, jika sama gabungkan lalu jumlahkan berdasrkan quantitynya
         $totalBuying = TransactionDetail::where('shipping_status', 'SUCCESS')

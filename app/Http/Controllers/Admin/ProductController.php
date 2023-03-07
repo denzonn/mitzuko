@@ -98,7 +98,6 @@ class ProductController extends Controller
             'variantProduct' => $variantProduct
         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -110,7 +109,7 @@ class ProductController extends Controller
         $data = $request->all();
 
         // Product
-        $data['slug'] = \Str::slug($request->name);
+        $gallery = $data['slug'] = \Str::slug($request->name);
         $product = Product::create($data);
 
         // Variant Product
@@ -118,15 +117,21 @@ class ProductController extends Controller
         foreach ($request->variant_name as $key => $value) {
             $variant = [
                 'products_id' => $product->id,
-                'variant_product_id' => $request->variant_product_id ?? 0,
-                'name' => $value ?? 'No Variant',
-                'price' => $request->variant_price[$key] ?? 0,
-                'stock' => $request->variant_stock[$key] ?? 0,
+                'variant_product_id' => $request->variant_product_id,
+                'name' => $value,
+                'price' => $request->variant_price[$key],
+                'stock' => $request->variant_stock[$key],
             ];
             $variants[] = $variant;
 
-            VariantType::create($variant);
+            if ($variant['variant_product_id'] == null) {
+                // Tidak perlu di simpan ke database
+                unset($variants[$key]);
+            } else {
+                VariantType::create($variant);
+            }
         }
+        // dd($variants);
 
         // Gallery Product
         if ($request->hasFile('photo')) {
@@ -135,14 +140,15 @@ class ProductController extends Controller
             $extension = $images->getClientOriginalExtension();
 
             $random = \Str::random(10);
-            $file_name = "product-gallery" . $random . "." . $extension;
+            $file_name = "product-" . $random . "." . $extension;
 
-            $data['photo'] = $images->storeAs('assets/product-gallery', $file_name, 'public');
+            $data['photo'] = $images->storeAs('product-gallery', $file_name, 'public');
         }
         $gallery = [
             'products_id' => $product->id,
             'photos' =>  $data['photo']
         ];
+
         ProductGallery::create($gallery);
 
         return redirect()->route('product.index');

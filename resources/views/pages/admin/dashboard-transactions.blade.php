@@ -36,9 +36,13 @@
                                     <a class="nav-link" id="pills-Selesai-tab" data-toggle="pill" href="#pills-Selesai"
                                         role="tab" aria-controls="pills-Selesai" aria-selected="false">Selesai</a>
                                 </li>
-                                <li class="nav-item" role="presentation">
+                                <li class="nav-item  mr-4" role="presentation">
                                     <a class="nav-link" id="pills-batal-tab" data-toggle="pill" href="#pills-batal"
                                         role="tab" aria-controls="pills-batal" aria-selected="false">Batal</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="pills-cod-tab" data-toggle="pill" href="#pills-cod"
+                                        role="tab" aria-controls="pills-cod" aria-selected="false">Cod</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="pills-tabContent">
@@ -327,6 +331,75 @@
                                 <div class="tab-pane fade" id="pills-batal" role="tabpanel"
                                     aria-labelledby="pills-batal-tab">
                                     @forelse ($cancelTransactions as $transaction)
+                                        <div class="card card-list d-block">
+                                            <h6 class="text-muted py-3 px-3 m-0 text-right"> <img src="/images/cancel.png"
+                                                    style="width: 25px; height: auto">
+                                                Pesanan Anda Telah Dibatalkan</h6>
+                                            <div class="px-3">
+                                                <hr class="m-0">
+                                            </div>
+                                            @forelse ($transaction->transaction_details as $detail)
+                                                <a class="d-block" style="text-decoration: none"
+                                                    href="{{ route('admin-dashboard-transaction-details', $detail->transaction->id) }}">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-3 col-md-1">
+                                                                <img src="{{ Storage::url($detail->product->galleries->first()->photos ?? '') }}"
+                                                                    alt="" style="width: 70px; height: auto" />
+                                                            </div>
+                                                            <div class="col-9 col-md-5 pl-0" style="line-height: 30px">
+                                                                {{ $detail->product->name }}
+                                                                {{-- Lakukan perulangan terhadap variant  --}}
+                                                                @foreach ($variantData as $item)
+                                                                    @if ($item->id == $detail->variant_type_id)
+                                                                        <div class="text-muted" style="font-size: 15px">
+                                                                            Variant : {{ $item->name }}
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                                @if (empty($detail->variant_type_id))
+                                                                @endif
+                                                            </div>
+                                                            <div class="col-3 col-md-2 text-muted">
+                                                                by {{ $transaction->user->name }}
+                                                            </div>
+                                                            <div class="col-9 col-md-3">
+                                                                {{ $transaction->created_at->format('d F Y') }}
+                                                            </div>
+                                                            <div class="col-md-1 d-none d-md-block">
+                                                                <img src="/images/angle.png" alt="" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <div class="px-3">
+                                                    <hr class="m-0">
+                                                </div>
+                                            @empty
+                                                <img src="/images/order.png" alt="" class="no-order">
+                                            @endforelse
+                                            <span>
+                                                <div class="d-flex align-items-center p-3 ">
+                                                    <div class="col-8 col-lg-8 col-md-8 px-0">
+                                                        <h6> Total
+                                                            Pesanan :
+                                                            <div style="font-size: 22px; color: #ff7158">
+                                                                Rp.
+                                                                {{ number_format($transaction->total, 0, ',', '.') }}
+                                                            </div>
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    @empty
+                                        <img src="/images/order.png" alt="" class="no-order">
+                                    @endforelse
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-cod" role="tabpanel"
+                                    aria-labelledby="pills-cod-tab">
+                                    @forelse ($codTransactions as $transaction)
                                         <div class="card card-list d-block">
                                             <h6 class="text-muted py-3 px-3 m-0 text-right"> <img src="/images/cancel.png"
                                                     style="width: 25px; height: auto">

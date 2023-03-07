@@ -76,9 +76,11 @@ class DetailController extends Controller
         } else {
             $recomendationTwo;
         }
-
         // Variant Product
         $variant = VariantType::where('products_id', $product->id)->get();
+
+        // dd($variant->count());
+
         // Product Rating
         $productId = $product->id;
 

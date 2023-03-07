@@ -11,7 +11,7 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'users_id',  'code', 'users_id',  'total', 'ongkir', 'transaction_status', 'shipping_status', 'snap_token'
+        'users_id',  'code', 'users_id',  'total', 'ongkir', 'payment_method', 'transaction_status', 'shipping_status', 'snap_token'
     ];
 
     protected $hidden = [];

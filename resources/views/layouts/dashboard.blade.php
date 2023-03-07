@@ -27,7 +27,7 @@
             <div class="border-right" id="sidebar-wrapper">
                 <div class="sidebard-heading text-center">
                     <a href="{{ route('home') }}">
-                        <img src="/images/dashboard-user.png" alt="" class="w-50 my-4" />
+                        <img src="/images/logo.png" alt="" class="py-4" style="max-width: 120px" />
                     </a>
                 </div>
                 <div class="list-group list-group-flush">
@@ -110,10 +110,12 @@
 
                 <!--  Content -->
                 @yield('content')
-
             </div>
         </div>
     </div>
+
+    {{-- Chat --}}
+    @include('includes.chat')
 
     <!-- Bootstrap core JavaScript -->
     @stack('prepend-script')

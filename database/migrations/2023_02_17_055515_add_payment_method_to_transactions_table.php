@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('variant_type', function (Blueprint $table) {
-            $table->id();
-            $table->integer('variant_product_id')->nullable();
-            $table->string('name')->nullable();
-            $table->integer('price')->nullable();
-            $table->timestamps();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->string('payment_method')->after('ongkir');
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('variant_type');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('payment_method');
+        });
     }
 };

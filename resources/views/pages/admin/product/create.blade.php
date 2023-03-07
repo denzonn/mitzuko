@@ -164,7 +164,7 @@
             });
     </script>
 
-    <script>
+    {{-- <script>
         $('form').submit(function(e) {
             e.preventDefault();
             var form = $(this);
@@ -194,7 +194,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 
     <script>
         // $(document).ready(function() {

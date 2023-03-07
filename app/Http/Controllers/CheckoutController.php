@@ -42,14 +42,28 @@ class CheckoutController extends Controller
             ->get();
 
         // Transaction Create
-        $transactions = Transaction::create([
-            'users_id' => Auth::user()->id,
-            'code' => $code,
-            'total' => $request->total_price,
-            'ongkir' => 0,
-            'transaction_status' => 'PENDING',
-            'shipping_status' => 'PENDING',
-        ]);
+        if ($request->payment == 'cod') {
+            $transactions = Transaction::create([
+                'users_id' => Auth::user()->id,
+                'code' => $code,
+                'total' => $request->total_price,
+                'ongkir' => 0,
+                'payment_method' => $request->payment,
+                'transaction_status' => 'SUCCESS',
+                'shipping_status' => 'PENDING',
+            ]);
+        } else if ($request->payment == 'online') {
+            $transactions = Transaction::create([
+                'users_id' => Auth::user()->id,
+                'code' => $code,
+                'total' => $request->total_price,
+                'ongkir' => 0,
+                'payment_method' => $request->payment,
+                'transaction_status' => 'PENDING',
+                'shipping_status' => 'PENDING',
+            ]);
+        }
+
 
         $variantTypeIds = [];
         foreach ($carts as $cart) {
@@ -110,16 +124,6 @@ class CheckoutController extends Controller
             ],
             'vtweb' => []
         );
-
-        // try {
-        //     // Get Snap Payment Page URL
-        //     $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
-
-        //     // Redirect to Snap Payment Page
-        //     return redirect($paymentUrl);
-        // } catch (Exception $e) {
-        //     echo $e->getMessage();
-        // }
 
         $snapToken = \Midtrans\Snap::getSnapToken($midtrans);
 

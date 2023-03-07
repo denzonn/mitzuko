@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('variant_type', function (Blueprint $table) {
+        Schema::create('chat', function (Blueprint $table) {
             $table->id();
-            $table->integer('variant_product_id')->nullable();
-            $table->string('name')->nullable();
-            $table->integer('price')->nullable();
+            $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
+            $table->string('message_code', 10);
+            $table->string('message', 255);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('variant_type');
+        Schema::dropIfExists('chat');
     }
 };
